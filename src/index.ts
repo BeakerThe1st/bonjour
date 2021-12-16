@@ -45,7 +45,3 @@ client.once("commandsRegistered", async () => {
     throw new Error(`Unable to update permissions in r/Apple.`);
   }
 });
-
-client.on("unhandledException", (err) => {
-  console.log(`Unhandled exception ${err}`);
-});
