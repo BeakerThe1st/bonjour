@@ -119,6 +119,11 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
   integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
+"@types/fold-to-ascii@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/fold-to-ascii/-/fold-to-ascii-5.0.0.tgz#df5c9d420552f001a9bb4803c6afb0252e8514e1"
+  integrity sha512-zaaLJcf8jPuVVYl6v+mSMaOMJNgkrDsYweu7Oa5RODIKgX9+Yu6Ng6/IY9zylwIurt0iQiDM0SN8agCOhLrKUA==
+
 "@types/json-schema@^7.0.9":
   version "7.0.9"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.9.tgz#97edc9037ea0c38585320b28964dde3b39e4660d"
@@ -606,6 +611,11 @@ flatted@^3.1.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
   integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
+
+fold-to-ascii@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/fold-to-ascii/-/fold-to-ascii-5.0.0.tgz#12986e02004abd0984a99f701e0707aa1c2ae0d0"
+  integrity sha512-HjtRWXC9aVit47DOEqvorgaQDiIyeX+frV3tM22RlllposIxnPXRM/vYoE6y6pwW57RdgahSe32Cu0vf4/UX1Q==
 
 form-data@^3.0.0:
   version "3.0.1"
