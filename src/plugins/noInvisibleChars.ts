@@ -15,7 +15,6 @@ const invisibleChars = [
   "\u200A",
   "\u200B",
   "\u200C",
-  "\u200D",
   "\u200E",
   "\u200F",
   "\u2060",
