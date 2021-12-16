@@ -42,6 +42,9 @@ const invisibleChars = [
 ];
 
 Bonjour.useEvent("messageCreate", async (message: Message) => {
+  if (message.author.bot) {
+    return;
+  }
   const { content } = message;
   if (!invisibleChars.some((char) => content.includes(char))) {
     return;
