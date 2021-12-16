@@ -1,4 +1,4 @@
-import * as Bonjour from "../bonjour";
+import * as Bonjour from "../core";
 import { Typing } from "discord.js";
 
 Bonjour.useEvent("typingStart", async (typing: Typing) => {

@@ -1,4 +1,4 @@
-import * as Bonjour from "../bonjour";
+import * as Bonjour from "../core";
 import { CommandInteraction, TextChannel } from "discord.js";
 
 const images = [

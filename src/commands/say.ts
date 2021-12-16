@@ -1,5 +1,5 @@
 import { CommandInteraction } from "discord.js";
-import * as Bonjour from "../bonjour";
+import * as Bonjour from "../core";
 
 Bonjour.useCommandRegistry().register({
   name: "say",
