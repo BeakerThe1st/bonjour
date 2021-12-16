@@ -20,7 +20,12 @@ Bonjour.useCommand(
   "say",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const message = interaction.options.getString("message", true);
-    await interaction.channel?.send(message);
+    await interaction.channel?.send({
+      content: message,
+      allowedMentions: {
+        parse: ["users"],
+      },
+    });
     return `Said \`${message}\` in ${interaction.channel}`;
   }
 );
