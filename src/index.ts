@@ -1,20 +1,12 @@
 import "./env";
-import { BonjourClient, DebugType, useCurrentClient } from "./bonjour";
-import mongoose from "mongoose";
-import { usePermissions } from "./bonjour/hooks/usePermissions";
+import { BonjourClient, DebugType, useCurrentClient } from "./core";
+import { usePermissions } from "./core/hooks/usePermissions";
 
-const { DISCORD_TOKEN, MONGO_URI } = process.env;
+const { DISCORD_TOKEN } = process.env;
 if (!DISCORD_TOKEN) {
   throw new Error("DISCORD_TOKEN undefined.");
 }
 
-if (!MONGO_URI) {
-  throw new Error("MONGO_URI undefined.");
-}
-
-await mongoose.connect(MONGO_URI).catch(() => {
-  throw new Error("Unable to connect to mongo");
-});
 const userGroups = new Map<string, number>();
 
 userGroups.set("334889501874978817", 100); // Admins
