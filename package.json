@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "dev": "nodemon ./src/index.ts",
-    "start": "node dist/index.js",
+    "start": "node --experimental-specifier-resolution=node ./dist/index.js ",
     "build": "tsc"
   },
   "devDependencies": {
