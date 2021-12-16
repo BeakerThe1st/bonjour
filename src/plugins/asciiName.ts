@@ -10,6 +10,18 @@ const foldNickname = async (member: GuildMember | PartialGuildMember) => {
   if (newNick !== member.nickname) {
     try {
       await member.setNickname(newNick, "Illegal Nickname");
+      await member.send({
+        embeds: [
+          {
+            author: {
+              name: member.guild.name,
+              iconURL: member.guild.iconURL() ?? undefined,
+            },
+            title: "Nickname Changed",
+            description: `Your display name was found to violate server rules. Your nickname was changed to **${newNick}**.`,
+          },
+        ],
+      });
     } catch {
       //ignored
     }
