@@ -8,7 +8,7 @@ Bonjour.useCommandRegistry().register({
   options: [
     {
       name: "message",
-      description: "Me//ssage to say.",
+      description: "Message to say.",
       type: "STRING",
       required: true,
     },
