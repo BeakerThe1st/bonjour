@@ -30,6 +30,7 @@ Bonjour.useCommand(
             {
               title: "Spam Report",
               description: `${interaction.user} reported ${user} for DM spam.`,
+              color: "RED",
             },
           ],
         });
