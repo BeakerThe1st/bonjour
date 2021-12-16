@@ -19,6 +19,7 @@ const foldNickname = async (member: GuildMember | PartialGuildMember) => {
             },
             title: "Nickname Changed",
             description: `Your display name was found to violate server rules. Your nickname was changed to **${newNick}**.`,
+            color: "RED",
           },
         ],
       });
