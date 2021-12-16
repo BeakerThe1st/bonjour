@@ -25,7 +25,7 @@ Bonjour.useEvent("typingStart", async (typing: Typing) => {
     return;
   }
   try {
-    member.roles.add(role);
+    await member.roles.add(role);
   } catch {
     //ignored
   }
