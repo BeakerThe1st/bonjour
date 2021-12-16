@@ -6,6 +6,11 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   if (message.channelId !== shotOnIphoneChannel) {
     return;
   }
+
+  if (message.author.id === "535722349132251136") {
+    /*genius bot id*/ return;
+  }
+
   const numberOfImages = message.attachments.filter((attachment) => {
     return !!attachment.contentType?.startsWith("image");
   }).size;
@@ -31,7 +36,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   try {
     await message.react("👍");
     await message.react("❤️");
-    await message.react("😮");
+    await message.react("😲");
   } catch {
     //ignored
   }
