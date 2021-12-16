@@ -16,14 +16,12 @@ const usePermissions = (guild: Guild) => {
       if (!bonjourCommand) {
         continue;
       }
-      console.log(`name: ${discordCommand.name}`);
       const allowedGroups: string[] = [];
       permissionLevels.forEach((permissionLevel, roleId) => {
         if (permissionLevel >= bonjourCommand.permissionLevel) {
           allowedGroups.push(roleId);
         }
       });
-      console.log(`allowed groups`, allowedGroups);
       fullPermissions.push({
         id: commandId,
         permissions: allowedGroups.map((roleId) => {
