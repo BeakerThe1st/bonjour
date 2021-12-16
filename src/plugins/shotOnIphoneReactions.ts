@@ -16,9 +16,9 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       const reply = await message.channel.send(
         `${message.author}, please only post images in this channel.`
       );
-      setTimeout(() => {
+      setTimeout(async () => {
         try {
-          reply.delete();
+          await reply.delete();
         } catch {
           //ignored
         }
