@@ -15,10 +15,15 @@ userGroups.set("334888870955188235", 30); // Support Enthusiasts
 userGroups.set("338950814108483586", 20); // Plus
 
 const client = new BonjourClient(DISCORD_TOKEN, {
-  intents: ["GUILDS"],
+  intents: [
+    "GUILDS",
+    "GUILD_MESSAGES",
+    "GUILD_MEMBERS",
+    "GUILD_MESSAGE_TYPING",
+  ],
   baseUrl: import.meta.url,
   folders: ["./plugins", "./commands"],
-  debug: DebugType.BONJOUR,
+  debug: DebugType.ALL,
   presence: {
     status: "online",
     activities: [
@@ -30,13 +35,17 @@ const client = new BonjourClient(DISCORD_TOKEN, {
   },
 });
 
-client.on("commandsRegistered", async () => {
+client.once("commandsRegistered", async () => {
   try {
     const rApple = await useCurrentClient().client.guilds.fetch(
       "332309672486895637"
     );
     usePermissions(rApple).update(userGroups);
   } catch {
-    console.log("Unable to update permissions in r/Apple");
+    throw new Error(`Unable to update permissions in r/Apple.`);
   }
+});
+
+client.on("unhandledException", (err) => {
+  console.log(`Unhandled exception ${err}`);
 });
