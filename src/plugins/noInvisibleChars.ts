@@ -48,9 +48,16 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   }
   try {
     await message.delete();
-    await message.channel.send(
+    const reply = await message.channel.send(
       `${message.author}, no invisible characters please.`
     );
+    setTimeout(async () => {
+      try {
+        await reply.delete();
+      } catch {
+        //ignored
+      }
+    }, 5000);
   } catch {
     //ignored
   }
