@@ -31,6 +31,10 @@ Bonjour.useCommand(
       throw new Error("The off topic channel is not a valid text channel.");
     }
 
+    if (interaction.channelId === offTopicChannel.id) {
+      return `Nice try 😉`;
+    }
+
     const { channel, user } = interaction;
     if (!channel) {
       throw new Error("That command must be run in a channel.");
