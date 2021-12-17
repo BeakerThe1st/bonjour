@@ -2,7 +2,7 @@ import ASCIIFolder from "fold-to-ascii";
 import { GuildMember, PartialGuildMember } from "discord.js";
 import { useEvent } from "../core";
 
-const foldNickname = async (member: GuildMember | PartialGuildMember) => {
+const foldNickname = async (member: GuildMember) => {
   console.log("folding nick");
   if (!member.nickname) {
     return;
@@ -34,4 +34,9 @@ const foldNickname = async (member: GuildMember | PartialGuildMember) => {
 };
 
 useEvent("guildMemberAdd", foldNickname);
-useEvent("guildMemberUpdate", foldNickname);
+useEvent(
+  "guildMemberUpdate",
+  (oldMember: GuildMember | PartialGuildMember, newMember: GuildMember) => {
+    foldNickname(newMember);
+  }
+);
