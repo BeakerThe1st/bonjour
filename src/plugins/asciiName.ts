@@ -3,17 +3,11 @@ import { GuildMember, PartialGuildMember } from "discord.js";
 import { useEvent } from "../core";
 
 const foldNickname = async (member: GuildMember) => {
-  console.log("folding nick");
-  if (!member.nickname) {
-    return;
-  }
-  console.log("user has nick");
-  const newNick = ASCIIFolder.foldReplacing(member.nickname);
-  console.log(`before ${member.nickname} after ${newNick}`);
-  if (newNick !== member.nickname) {
-    console.log("they do not equal");
+  const { displayName } = member;
+  const newName = ASCIIFolder.foldReplacing(displayName);
+  if (newName !== displayName) {
     try {
-      await member.setNickname(newNick, "Illegal Nickname");
+      await member.setNickname(newName, "Illegal Nickname");
       await member.send({
         embeds: [
           {
@@ -22,7 +16,7 @@ const foldNickname = async (member: GuildMember) => {
               iconURL: member.guild.iconURL() ?? undefined,
             },
             title: "Nickname Changed",
-            description: `Your display name was found to violate server rules. Your nickname was changed to **${newNick}**.`,
+            description: `Your display name was found to violate server rules. Your nickname was changed to **${newName}**.`,
             color: "RED",
           },
         ],
