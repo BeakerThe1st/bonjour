@@ -2,16 +2,15 @@ import { Message, MessageMentions } from "discord.js";
 import * as Bonjour from "../core";
 
 Bonjour.useEvent("messageCreate", (message: Message) => {
-  if (message.author.id !== "537861332532461579") {
-    return;
-  }
-  let reply = "dab";
+  let reply = "";
   const { mentions } = message;
   if (message.content.match(MessageMentions.EVERYONE_PATTERN)) {
-    reply += "matches regex ";
+    reply += "matches regex for everyone/here - ";
   }
   if (mentions.everyone) {
-    reply += "does actually mention everyone";
+    reply += "mentions everyone/here";
   }
-  message.reply(reply);
+  if (reply.length > 0) {
+    message.reply(reply);
+  }
 });
