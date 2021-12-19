@@ -29,14 +29,16 @@ Bonjour.useEvent(
           {
             title: "Welcome!",
             description: `Hello ${newMember}, welcome to <#${punishmentAppealsChannel}>.
-            First and foremost, please do not ping staff or DM ModMail. You are in this channel because you were muted, there are 3 potential reasons you were muted:
+            Please do not ping staff or DM ModMail. You are in this channel because you were muted either:
             
-            1. You were manually muted by our moderation team
-            2. You were automatically muted by a bot
-            3. You have an iReport and were automatically muted upon joining
+            1. By our moderation team
+            2. By a bot
+            3. Because you have an iReport and were automatically muted upon joining
             
-            Please ensure that you familiarise yourself with our rules in <#476691390332403723> before returning to the server.
-            You may see how long is left on your mute by using the \`!timeleft\` command. If your mute is permanent, please wait patiently and a staff member will review your case. If a staff member does not send you a message within 24 hours, feel free to DM <@582568116748550144>.`,
+            While you're in this channel, be sure to check out our rules over in <#476691390332403723>.
+            
+            You may see how long is left on your mute by using the \`!timeleft\` command. If your mute is permanent, please wait patiently and a staff member will review your case. If a staff member does not contact you within 24 hours, feel free to DM <@582568116748550144>.`,
+            color: "BLUE",
           },
         ],
       });
