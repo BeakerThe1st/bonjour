@@ -27,9 +27,9 @@ Bonjour.useEvent(
         content: `${newMember}`,
         embeds: [
           {
-            title: "Welcome!",
-            description: `Hello ${newMember}, welcome to <#${punishmentAppealsChannel}>. **Please do not ping staff or DM ModMail.**
-            You are in this channel because you were muted either:
+            title: "Welcome! 👋",
+            description: `Hello ${newMember}, welcome to <#${punishmentAppealsChannel}>.
+            **Please do not ping staff or DM ModMail.** You are in this channel because you were muted either:
             
             1. By our moderation team
             2. By a bot
