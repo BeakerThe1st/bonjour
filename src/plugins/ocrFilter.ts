@@ -9,10 +9,14 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   }
   let containsBadWord = false;
   for (const [id, attachment] of attachments) {
-    const result = await Tesseract.recognize(attachment.url, "eng");
-    if (result.data.text.includes("retard")) {
-      containsBadWord = true;
-      break;
+    try {
+      const result = await Tesseract.recognize(attachment.url, "eng");
+      if (result.data.text.includes("retard")) {
+        containsBadWord = true;
+        break;
+      }
+    } catch {
+      continue;
     }
   }
   if (containsBadWord) {
