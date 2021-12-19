@@ -7,15 +7,18 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   if (attachments.size < 1) {
     return;
   }
+  console.log(`Attachments from ${message.author.tag}`);
   let containsBadWord = false;
   for (const [id, attachment] of attachments) {
     try {
       const result = await Tesseract.recognize(attachment.url, "eng");
+      console.log(result);
       if (result.data.text.includes("retard")) {
         containsBadWord = true;
         break;
       }
-    } catch {
+    } catch (error) {
+      console.log(error);
       continue;
     }
   }
