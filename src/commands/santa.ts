@@ -23,12 +23,9 @@ Bonjour.useCommand(
     const santaChannel = await Bonjour.useCurrentClient().client.channels.fetch(
       "922279194015174656"
     );
-    if (!santaChannel?.isText()) {
-      throw new Error("Misconfiguration, please DM ModMail");
-    }
     const { member } = interaction;
-    if (!(member instanceof GuildMember)) {
-      throw new Error("Got PartialGuildMember!");
+    if (!santaChannel?.isText() || !(member instanceof GuildMember)) {
+      throw new Error();
     }
     if (member.roles.cache.has(santaSquadRole)) {
       return `You already have the SantaSquad role!`;
@@ -73,73 +70,49 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     return;
   }
   const { customId, message, guild } = interaction;
-  if (!customId.startsWith("santa")) {
+  if (!guild || !(message instanceof Message)) {
     return;
   }
-  const accepted = customId.startsWith("santa-accept");
-  if (!guild) {
+  const [interactionType, action, userId] = customId.split("-");
+  const accepted = action === "accept";
+  if (interactionType !== "santa") {
     return;
   }
   await interaction.deferReply({ ephemeral: true });
+  const target = await guild.members.fetch(userId);
+  const image = {
+    url: message.embeds[0]?.image?.url ?? target.displayAvatarURL(),
+  };
+  await message.edit({
+    embeds: [
+      {
+        title: `Member ${accepted ? "Accepted" : "Denied"}`,
+        description: `${interaction.user} ${
+          accepted ? "accepted" : "denied"
+        } ${target} for SantaSquad.`,
+        color: accepted ? "GREEN" : "RED",
+        image,
+      },
+    ],
+    components: [],
+  });
+  if (accepted) {
+    const role = await guild.roles.fetch(santaSquadRole);
+    if (!role) {
+      throw new Error("Santa squad role not found.");
+    }
+  }
+  await interaction.editReply(
+    `Successfully ${accepted ? "accepted" : "denied"} ${target} for SantaSquad.`
+  );
   try {
-    const member = await guild.members.fetch(customId.split("-")[2]);
-    if (message instanceof Message) {
-      const image = message.embeds[0]?.image?.url ?? member.displayAvatarURL();
-      const embed = new MessageEmbed().setImage(image);
-      if (accepted) {
-        const role = await guild.roles.fetch(santaSquadRole);
-        if (!role) {
-          return;
-        }
-        await message.edit({
-          embeds: [
-            embed
-              .setColor("GREEN")
-              .setTitle("Member Accepted")
-              .setDescription(
-                `${interaction.user} accepted ${member} for SantaSquad.`
-              ),
-          ],
-          components: [],
-        });
-        await member.roles.add(role);
-        await interaction.editReply(
-          `Successfully accepted ${member} for SantaSquad.`
-        );
-        try {
-          await member.send("You were accepted into SantaSquad! 🎅");
-        } catch {
-          //ignored
-        }
-      } else {
-        await message.edit({
-          embeds: [
-            embed
-              .setColor("RED")
-              .setTitle("Member Denied")
-              .setDescription(
-                `${interaction.user} denied ${member} for SantaSquad.`
-              ),
-          ],
-          components: [],
-        });
-        await interaction.editReply(
-          `Successfully denied ${member} for SantaSquad`
-        );
-        try {
-          await member.send(
-            `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.\nPlease also note that we judge your profile picture based on when you sent the command, if you have changed it since then, simply reapply.`
-          );
-        } catch {
-          //ignored
-        }
-      }
-    }
-  } catch (error) {
-    try {
-      await interaction.editReply(`${error}`);
-    } catch {
-      //ignored
-    }
+    await target.send(
+      accepted
+        ? `You were accepted into SantaSquad! 🎅`
+        : `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.
+        Please also note that we judge your profile picture based on when you sent the command, if you have changed it since then, simply reapply.`
+    );
+  } catch {
+    //ignored
   }
 });
