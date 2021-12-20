@@ -81,8 +81,9 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     return;
   }
   await interaction.deferReply({ ephemeral: true });
+  const targetId = customId.substring(customId.lastIndexOf("-"));
   try {
-    const member = await guild.members.fetch(customId.slice(-18));
+    const member = await guild.members.fetch(targetId);
     if (message instanceof Message) {
       const image = message.embeds[0]?.image?.url ?? member.displayAvatarURL();
       const embed = new MessageEmbed().setImage(image);
@@ -123,7 +124,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
           `Successfully denied ${member} for SantaSquad`
         );
         await member.send(
-          `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.`
+          `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.\nPlease also note that we judge your profile picture based on when you sent the command, if you have changed it since then, simply reapply.`
         );
       }
     }
