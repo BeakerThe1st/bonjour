@@ -23,6 +23,7 @@ const quotes: string[][] = [
     `this is how Discord works`,
   ],
   [`also M1 is the fastest CPU that exists`],
+  [`except that's not a thing`, `there is no such thing as "off" or "on"`],
 ];
 
 Bonjour.useCommand(
