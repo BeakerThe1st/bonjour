@@ -14,7 +14,7 @@ Bonjour.useCommandRegistry().register({
   description:
     "Request SantaSquad role if you have a santa hat in your profile picture.",
   permissionLevel: 0,
-  ephemeral,
+  ephemeral: true,
 });
 
 Bonjour.useCommand(
@@ -126,7 +126,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     }
   } catch (error) {
     try {
-      await interaction.editReply(error);
+      await interaction.editReply(`${error}`);
     } catch {
       //ignored
     }
