@@ -1,4 +1,9 @@
-import { CommandInteraction, Interaction } from "discord.js";
+import {
+  CommandInteraction,
+  Interaction,
+  Message,
+  MessageEmbed,
+} from "discord.js";
 import * as Bonjour from "../core";
 
 Bonjour.useCommandRegistry().register({
@@ -48,12 +53,44 @@ Bonjour.useCommand(
   }
 );
 
-Bonjour.useEvent("interactionCreate", (interaction: Interaction) => {
+Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isButton()) {
     return;
   }
-  const { customId } = interaction;
+  const { customId, message } = interaction;
   if (!customId.startsWith("santa")) {
     return;
+  }
+  const accepted = customId.startsWith("santa-accept");
+  try {
+    const member = await interaction.guild.members.fetch(customId.slice(-18));
+    if (message instanceof Message) {
+      const embed = new MessageEmbed().setImage(member.displayAvatarURL());
+      if (accepted) {
+        await message.edit({
+          embeds: [
+            embed
+              .setColor("GREEN")
+              .setTitle("Member Accepted")
+              .setDescription(
+                `${interaction.user} accepted ${member} for SantaSquad.`
+              ),
+          ],
+        });
+      } else {
+        await message.edit({
+          embeds: [
+            embed
+              .setColor("RED")
+              .setTitle("Member Denied")
+              .setDescription(
+                `${interaction.user} denied ${member} for SantaSquad.`
+              ),
+          ],
+        });
+      }
+    }
+  } catch {
+    //ignored
   }
 });
