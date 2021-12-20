@@ -109,8 +109,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await target.send(
       accepted
         ? `You were accepted into SantaSquad! 🎅`
-        : `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.
-        Please also note that we judge your profile picture based on when you sent the command, if you have changed it since then, simply reapply.`
+        : `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.\nPlease also note that we judge your profile picture based on when you sent the command, if you have changed it since then, simply reapply.`
     );
   } catch {
     //ignored
