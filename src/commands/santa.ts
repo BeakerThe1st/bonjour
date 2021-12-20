@@ -50,10 +50,13 @@ Bonjour.useCommand(
               type: "BUTTON",
               customId: `santa-accept-${interaction.user.id}`,
               style: "PRIMARY",
+              label: "Accept",
             },
             {
               type: "BUTTON",
               customId: `santa-deny-${interaction.user.id}`,
+              label: "Deny",
+              style: "DANGER",
             },
           ],
         },
