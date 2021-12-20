@@ -64,7 +64,7 @@ Bonjour.useCommand(
         },
       ],
     });
-    return `Merry Christmas! You have successfully requested the SantaSquad role! 
+    return `Merry Christmas! You have successfully requested the SantaSquad role!
     If you do not receive the role within 24 hours and you have a santa hat in your profile picture, you may reapply if no staff member has contacted you about it.`;
   }
 );
