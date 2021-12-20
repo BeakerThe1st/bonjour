@@ -24,6 +24,7 @@ const quotes: string[][] = [
   ],
   [`also M1 is the fastest CPU that exists`],
   [`except that's not a thing`, `there is no such thing as "off" or "on"`],
+  [`I like the butterfly switches`],
 ];
 
 Bonjour.useCommand(
