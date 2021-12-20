@@ -100,6 +100,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
                 `${interaction.user} accepted ${member} for SantaSquad.`
               ),
           ],
+          components: [],
         });
         await member.roles.add(role);
         await interaction.editReply(
@@ -116,6 +117,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
                 `${interaction.user} denied ${member} for SantaSquad.`
               ),
           ],
+          components: [],
         });
         await interaction.editReply(
           `Successfully denied ${member} for SantaSquad`
