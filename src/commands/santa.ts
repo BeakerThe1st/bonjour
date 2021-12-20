@@ -27,19 +27,19 @@ Bonjour.useCommand(
       throw new Error("Misconfiguration, please DM ModMail");
     }
     const { member } = interaction;
-    if (
-      member instanceof GuildMember &&
-      member.roles.cache.has(santaSquadRole)
-    ) {
+    if (!(member instanceof GuildMember)) {
+      throw new Error("Got PartialGuildMember!");
+    }
+    if (member.roles.cache.has(santaSquadRole)) {
       return `You already have the SantaSquad role!`;
     }
     await santaChannel.send({
       embeds: [
         {
           title: "SantaSquad Request",
-          description: `${interaction.user} has requested SantaSquad.`,
+          description: `${member} has requested SantaSquad.`,
           image: {
-            url: `${interaction.user.displayAvatarURL()}`,
+            url: `${member.displayAvatarURL()}`,
           },
           color: "BLUE",
         },
@@ -84,9 +84,10 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   try {
     const member = await guild.members.fetch(customId.slice(-18));
     if (message instanceof Message) {
-      const embed = new MessageEmbed().setImage(member.displayAvatarURL());
+      const image = message.embeds[0]?.image?.url ?? member.displayAvatarURL();
+      const embed = new MessageEmbed().setImage(image);
       if (accepted) {
-        const role = await guild.roles.fetch("922282045223342120");
+        const role = await guild.roles.fetch(santaSquadRole);
         if (!role) {
           return;
         }
@@ -105,7 +106,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
         await interaction.editReply(
           `Successfully accepted ${member} for SantaSquad.`
         );
-        return;
+        await member.send("You were accepted into SantaSquad! 🎅");
       } else {
         await message.edit({
           embeds: [
@@ -120,6 +121,9 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
         });
         await interaction.editReply(
           `Successfully denied ${member} for SantaSquad`
+        );
+        await member.send(
+          `That's not a very festive profile picture! Please ensure you change your profile picture contains a santa hat and reapply with \`/santa\`.`
         );
       }
     }
