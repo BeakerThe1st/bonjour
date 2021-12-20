@@ -14,6 +14,7 @@ Bonjour.useCommandRegistry().register({
   description:
     "Request SantaSquad role if you have a santa hat in your profile picture.",
   permissionLevel: 0,
+  ephemeral,
 });
 
 Bonjour.useCommand(
@@ -40,6 +41,7 @@ Bonjour.useCommand(
           image: {
             url: `${interaction.user.displayAvatarURL()}`,
           },
+          color: "BLUE",
         },
       ],
       components: [
@@ -49,7 +51,7 @@ Bonjour.useCommand(
             {
               type: "BUTTON",
               customId: `santa-accept-${interaction.user.id}`,
-              style: "PRIMARY",
+              style: "SUCCESS",
               label: "Accept",
             },
             {
@@ -79,6 +81,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (!guild) {
     return;
   }
+  await interaction.deferReply({ ephemeral: true });
   try {
     const member = await guild.members.fetch(customId.slice(-18));
     if (message instanceof Message) {
@@ -99,6 +102,10 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
           ],
         });
         await member.roles.add(role);
+        await interaction.editReply(
+          `Successfully accepted ${member} for SantaSquad.`
+        );
+        return;
       } else {
         await message.edit({
           embeds: [
@@ -110,9 +117,16 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
               ),
           ],
         });
+        await interaction.editReply(
+          `Successfully denied ${member} for SantaSquad`
+        );
       }
     }
-  } catch {
-    //ignored
+  } catch (error) {
+    try {
+      await interaction.editReply(error);
+    } catch {
+      //ignored
+    }
   }
 });
