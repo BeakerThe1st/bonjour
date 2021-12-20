@@ -73,12 +73,18 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     return;
   }
   const accepted = customId.startsWith("santa-accept");
+  if (!guild) {
+    return;
+  }
   try {
     const member = await guild.members.fetch(customId.slice(-18));
     if (message instanceof Message) {
       const embed = new MessageEmbed().setImage(member.displayAvatarURL());
       if (accepted) {
         const role = await guild.roles.fetch("922282045223342120");
+        if (!role) {
+          return;
+        }
         await message.edit({
           embeds: [
             embed
