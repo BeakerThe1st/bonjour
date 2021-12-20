@@ -3,12 +3,12 @@ import { ClientEvents } from "discord.js";
 
 const useEvent = <K extends keyof ClientEvents>(
   eventName: K,
-  executor: (...args: ClientEvents[K]) => void
+  executor: (...args: ClientEvents[K]) => void | Promise<void>
 ) => {
   const { client } = useCurrentClient();
-  client.on(eventName, (...args: ClientEvents[K]) => {
+  client.on(eventName, async (...args: ClientEvents[K]) => {
     try {
-      executor(...args);
+      await executor(...args);
     } catch (error) {
       console.log(`Error with ${eventName} event`, error);
     }
