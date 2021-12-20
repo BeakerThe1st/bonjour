@@ -81,9 +81,8 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     return;
   }
   await interaction.deferReply({ ephemeral: true });
-  const targetId = customId.substring(customId.lastIndexOf("-"));
   try {
-    const member = await guild.members.fetch(targetId);
+    const member = await guild.members.fetch(customId.split("-")[2]);
     if (message instanceof Message) {
       const image = message.embeds[0]?.image?.url ?? member.displayAvatarURL();
       const embed = new MessageEmbed().setImage(image);
