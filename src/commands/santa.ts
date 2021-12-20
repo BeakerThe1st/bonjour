@@ -101,6 +101,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     if (!role) {
       throw new Error("Santa squad role not found.");
     }
+    await target.roles.add(role);
   }
   await interaction.editReply(
     `Successfully ${accepted ? "accepted" : "denied"} ${target} for SantaSquad.`
