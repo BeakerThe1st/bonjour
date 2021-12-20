@@ -6,7 +6,13 @@ const useEvent = <K extends keyof ClientEvents>(
   executor: (...args: ClientEvents[K]) => void
 ) => {
   const { client } = useCurrentClient();
-  client.on(eventName, executor);
+  client.on(eventName, (...args: ClientEvents[K]) => {
+    try {
+      executor(...args);
+    } catch (error) {
+      console.log(`Error with ${eventName} event`, error);
+    }
+  });
   client.emit("bonjourDebug", `Registered handler for ${eventName}`);
 };
 
