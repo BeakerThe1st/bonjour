@@ -1,10 +1,13 @@
 import {
   CommandInteraction,
+  GuildMember,
   Interaction,
   Message,
   MessageEmbed,
 } from "discord.js";
 import * as Bonjour from "../core";
+
+const santaSquadRole = "922282045223342120";
 
 Bonjour.useCommandRegistry().register({
   name: "santa",
@@ -21,6 +24,13 @@ Bonjour.useCommand(
     );
     if (!santaChannel?.isText()) {
       throw new Error("Misconfiguration, please DM ModMail");
+    }
+    const { member } = interaction;
+    if (
+      member instanceof GuildMember &&
+      member.roles.cache.has(santaSquadRole)
+    ) {
+      return `You already have the SantaSquad role!`;
     }
     await santaChannel.send({
       embeds: [
@@ -49,7 +59,8 @@ Bonjour.useCommand(
         },
       ],
     });
-    return `Successfully requested the SantaSquad role! If you do not receive the role within 24 hours and you have a santa hat in your profile picture, you may reapply if no staff member has contacted you about it.`;
+    return `Merry Christmas! You have successfully requested the SantaSquad role! 
+    If you do not receive the role within 24 hours and you have a santa hat in your profile picture, you may reapply if no staff member has contacted you about it.`;
   }
 );
 
@@ -57,16 +68,17 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isButton()) {
     return;
   }
-  const { customId, message } = interaction;
+  const { customId, message, guild } = interaction;
   if (!customId.startsWith("santa")) {
     return;
   }
   const accepted = customId.startsWith("santa-accept");
   try {
-    const member = await interaction.guild.members.fetch(customId.slice(-18));
+    const member = await guild.members.fetch(customId.slice(-18));
     if (message instanceof Message) {
       const embed = new MessageEmbed().setImage(member.displayAvatarURL());
       if (accepted) {
+        const role = await guild.roles.fetch("922282045223342120");
         await message.edit({
           embeds: [
             embed
@@ -77,6 +89,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
               ),
           ],
         });
+        await member.roles.add(role);
       } else {
         await message.edit({
           embeds: [
