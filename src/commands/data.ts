@@ -2,18 +2,18 @@ import { CommandInteraction } from "discord.js";
 import * as Bonjour from "../core";
 
 Bonjour.useCommandRegistry().register({
-  name: "dump",
-  description: "Data dump.",
+  name: "data",
+  description: "Displays data.",
   options: [
     {
       type: "SUB_COMMAND",
       name: "user",
-      description: "Data dump a user.",
+      description: "Displays user data.",
       options: [
         {
           type: "USER",
           name: "user",
-          description: "User to data dump.",
+          description: "User to display data for.",
           required: true,
         },
       ],
@@ -21,12 +21,12 @@ Bonjour.useCommandRegistry().register({
     {
       type: "SUB_COMMAND",
       name: "channel",
-      description: "Data dump a channel.",
+      description: "Displays channel data.",
       options: [
         {
           type: "CHANNEL",
           name: "channel",
-          description: "Channel to data dump.",
+          description: "Channel to display data for.",
           required: true,
         },
       ],
@@ -34,12 +34,12 @@ Bonjour.useCommandRegistry().register({
     {
       type: "SUB_COMMAND",
       name: "role",
-      description: "Data dump a role",
+      description: "Displays role data",
       options: [
         {
           type: "ROLE",
           name: "role",
-          description: "Role to data dump.",
+          description: "Role to display data for.",
           required: true,
         },
       ],
@@ -49,7 +49,7 @@ Bonjour.useCommandRegistry().register({
 });
 
 Bonjour.useCommand(
-  "dump",
+  "data",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const { options } = interaction;
     const subcommand = options.getSubcommand();
