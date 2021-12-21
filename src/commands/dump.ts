@@ -53,10 +53,16 @@ Bonjour.useCommand(
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const { options } = interaction;
     const subcommand = options.getSubcommand();
-    const object = (() => {
+    const object = await (async () => {
       switch (subcommand) {
-        case "user":
-          return options.getUser("user", true);
+        case "user": {
+          const user = options.getUser("user", true);
+          const member = await interaction.guild?.members.fetch(user);
+          if (member) {
+            return { user, member };
+          }
+          return user;
+        }
         case "channel":
           return options.getChannel("channel", true);
         case "role":
