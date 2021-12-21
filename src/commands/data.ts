@@ -34,7 +34,7 @@ Bonjour.useCommandRegistry().register({
     {
       type: "SUB_COMMAND",
       name: "role",
-      description: "Displays role data",
+      description: "Displays role data.",
       options: [
         {
           type: "ROLE",
