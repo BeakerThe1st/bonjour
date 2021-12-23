@@ -12,6 +12,7 @@ const userGroups = new Map<string, number>();
 userGroups.set("334889501874978817", 100); // Admins
 userGroups.set("334889410006876161", 50); // r/Apple ModSquad
 userGroups.set("334888870955188235", 30); // Support Enthusiasts
+userGroups.set("340485917150150656", 25); // Honorary Members
 userGroups.set("338950814108483586", 20); // Plus
 
 const client = new BonjourClient(DISCORD_TOKEN, {
