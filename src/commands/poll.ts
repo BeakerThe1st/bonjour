@@ -3,7 +3,6 @@ import {
   Interaction,
   Message,
   MessageOptions,
-  MessagePayload,
 } from "discord.js";
 import * as Bonjour from "../core";
 
