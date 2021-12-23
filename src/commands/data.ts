@@ -57,11 +57,12 @@ Bonjour.useCommand(
       switch (subcommand) {
         case "user": {
           const user = options.getUser("user", true);
-          const member = await interaction.guild?.members.fetch(user);
-          if (member) {
+          try {
+            const member = await interaction.guild?.members.fetch(user);
             return { user, member };
+          } catch {
+            return { user };
           }
-          return user;
         }
         case "channel":
           return options.getChannel("channel", true);
