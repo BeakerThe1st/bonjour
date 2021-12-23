@@ -31,7 +31,7 @@ Bonjour.useCommand(
   "poll",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const question = interaction.options.getString("question", true);
-    const message = await interaction.editReply(" ");
+    const message = await interaction.fetchReply();
     if (!(message instanceof Message)) {
       throw new Error("Message instanceof APIMessage");
     }
