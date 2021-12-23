@@ -1,4 +1,10 @@
-import { CommandInteraction, Interaction, Message } from "discord.js";
+import {
+  CommandInteraction,
+  Interaction,
+  Message,
+  MessageOptions,
+  MessagePayload,
+} from "discord.js";
 import * as Bonjour from "../core";
 
 type Poll = {
@@ -25,18 +31,17 @@ Bonjour.useCommand(
   "poll",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const question = interaction.options.getString("question", true);
-    const message = await interaction.editReply("");
+    const message = await interaction.editReply(" ");
     if (!(message instanceof Message)) {
       throw new Error("Message instanceof APIMessage");
     }
     polls.set(message.id, { question, users: new Map() });
-    await updatePollEmbed(message);
-    return null;
+    return getPollMessage(message.id);
   }
 );
 
-const updatePollEmbed = async (message: Message) => {
-  const poll = polls.get(message.id);
+const getPollMessage = (messageId: string): MessageOptions => {
+  const poll = polls.get(messageId);
   if (!poll) {
     throw new Error("Poll does not exist.");
   }
@@ -49,7 +54,7 @@ const updatePollEmbed = async (message: Message) => {
       noTally++;
     }
   }
-  await message.edit({
+  return {
     embeds: [
       {
         title: `${poll.question}`,
@@ -87,7 +92,7 @@ const updatePollEmbed = async (message: Message) => {
         ],
       },
     ],
-  });
+  };
 };
 
 Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
@@ -119,5 +124,5 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await interaction.editReply(`Successfully voted ${action}.`);
   }
   polls.set(message.id, poll);
-  await updatePollEmbed(message);
+  await message.edit(getPollMessage(message.id));
 });
