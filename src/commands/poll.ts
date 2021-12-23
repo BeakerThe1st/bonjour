@@ -25,7 +25,7 @@ Bonjour.useCommand(
   "poll",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const question = interaction.options.getString("question", true);
-    const message = await interaction.fetchReply();
+    const message = await interaction.editReply("");
     if (!(message instanceof Message)) {
       throw new Error("Message instanceof APIMessage");
     }
@@ -65,6 +65,7 @@ const updatePollEmbed = async (message: Message) => {
             inline: true,
           },
         ],
+        color: "BLURPLE",
       },
     ],
     components: [
