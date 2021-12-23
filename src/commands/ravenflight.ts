@@ -4,7 +4,7 @@ import * as Bonjour from "../core";
 Bonjour.useCommandRegistry().register({
   name: "ravenflight",
   description: "Harass ravenflight.",
-  permissionLevel: 50,
+  permissionLevel: 20,
   ephemeral: true,
 });
 
