@@ -51,7 +51,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   if (message.channelId === "923758797149831178") {
     await message.reply(`\`\`\`json\n${JSON.stringify(scores, null, 2)}\`\`\``);
   }
-  if (scores.IDENTITY_ATTACK && scores.IDENTITY_ATTACK > 0.85) {
+  if (scores.IDENTITY_ATTACK && scores.IDENTITY_ATTACK > 85) {
     await message.react("😠");
   }
   if (message.member?.roles.cache.has("881503056091557978")) {
