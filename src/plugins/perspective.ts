@@ -30,7 +30,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       key: PERSPECTIVE_KEY,
       resource,
     },
-    (err, response) => {
+    (err: unknown, response: any) => {
       if (err) {
         throw err;
       }
