@@ -14,7 +14,7 @@ type PerspectiveScores = {
 
 Bonjour.useEvent("messageCreate", async (message: Message) => {
   const { content: text } = message;
-  if (!text) {
+  if (!text || message.author.bot) {
     return;
   }
   if (message.channelId !== "923758797149831178") {
