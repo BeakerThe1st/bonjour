@@ -3,7 +3,6 @@ import {
   GuildMember,
   Interaction,
   Message,
-  MessageEmbed,
 } from "discord.js";
 import * as Bonjour from "../core";
 
