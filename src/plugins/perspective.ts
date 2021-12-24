@@ -79,7 +79,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     }
   }
   const staffQueue = await useCurrentClient().client.channels.fetch(
-    "922279194015174656"
+    "476924704528138271"
   );
   if (!staffQueue || !staffQueue.isText()) {
     throw new Error("Staff queue not configured correctly.");
