@@ -34,11 +34,12 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       params: { key: PERSPECTIVE_KEY },
     }
   );
-  const flags = Object.entries(res.data.attributeScores).filter(
-    ([attributeName, value]) => {
-      return (value as any).summaryScore.value > 0.85;
+  const flags = Object.entries(res.data.attributeScores).map(([key, value]) => {
+    const score = (value as any).summaryScore.value;
+    if (score > 0.85) {
+      return [key, score];
     }
-  );
+  });
   if (message.channelId === "923758797149831178") {
     await message.reply(`\`\`\`json\n${JSON.stringify(flags, null, 2)}\`\`\``);
   }
