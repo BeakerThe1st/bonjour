@@ -23,6 +23,13 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     },
     requestedAttributes: {
       TOXICITY: {},
+      SEVERE_TOXICITY: {},
+      IDENTITY_ATTACK: {},
+      INSULT: {},
+      PROFANITY: {},
+      THREAT: {},
+      SEXUALLY_EXPLICIT: {},
+      FLIRTATION: {},
     },
   };
   (client.comments as any).analyze(
@@ -32,7 +39,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     },
     (err: unknown, response: any) => {
       if (err) {
-        throw err;
+        return;
       }
       message.reply(
         `\`\`\`json\n${JSON.stringify(response.data, null, 2)}\`\`\``
