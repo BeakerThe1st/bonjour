@@ -34,14 +34,15 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       params: { key: PERSPECTIVE_KEY },
     }
   );
-  const flags = Object.entries(res.data.attributeScores).map(([key, value]) => {
-    const score = (value as any).summaryScore.value;
-    if (score > 0.85) {
-      return [key, score];
-    }
-  });
+  const flags = Object.entries(res.data.attributeScores)
+    .filter(([, value]) => (value as any).summaryScore.value > 0.85)
+    .map(([key, value]) => [key, (value as any).summaryScore.value]);
   if (message.channelId === "923758797149831178") {
-    await message.reply(`\`\`\`json\n${JSON.stringify(flags, null, 2)}\`\`\``);
+    if (flags.length > 0) {
+      await message.reply(`\`\`\`json\n${JSON.stringify(flags)}\`\`\``);
+    } else {
+      await message.reply("No flags found!");
+    }
   }
   if (message.member?.roles.cache.has("881503056091557978")) {
     //user is established
