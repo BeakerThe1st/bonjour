@@ -4,12 +4,12 @@ import { Message } from "discord.js";
 import * as Bonjour from "../core";
 
 type PerspectiveScores = {
-  TOXICITY?: number;
-  SEVERE_TOXICITY?: number;
-  IDENTITY_ATTACK?: number;
-  INSULT?: number;
-  PROFANITY?: number;
-  THREAT?: number;
+  TOXICITY?: string;
+  SEVERE_TOXICITY?: string;
+  IDENTITY_ATTACK?: string;
+  INSULT?: string;
+  PROFANITY?: string;
+  THREAT?: string;
 };
 
 Bonjour.useEvent("messageCreate", async (message: Message) => {
@@ -47,7 +47,8 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   );
   const scores: PerspectiveScores = {};
   for (const [key, value] of Object.entries(res.data.attributeScores).sort()) {
-    scores[key as keyof PerspectiveScores] = (value as any).summaryScore.value;
+    const percent = Math.round((value as any).summaryScore.value * 1000) / 10;
+    scores[key as keyof PerspectiveScores] = `${percent}%`;
   }
   message.reply(`\`\`\`json\n${JSON.stringify(scores, null, 2)}\`\`\``);
   if (message.member?.roles.cache.has("881503056091557978")) {
