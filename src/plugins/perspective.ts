@@ -37,13 +37,22 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       key: PERSPECTIVE_KEY,
       resource,
     },
-    (err: unknown, response: any) => {
+    async (err: unknown, response: any) => {
       if (err) {
         return;
       }
-      message.reply(
-        `\`\`\`json\n${JSON.stringify(response.data, null, 2)}\`\`\``
-      );
+      const responseMessage: any = {};
+      for (const attributeScore of response.data.attributeScores) {
+        attributeScore.summaryScore.value;
+        responseMessage[attributeScore] = attributeScore.summaryScore.value;
+      }
+      try {
+        await message.reply(
+          `\`\`\`json\n${JSON.stringify(responseMessage, null, 2)}\`\`\``
+        );
+      } catch {
+        //ignored
+      }
     }
   );
 });
