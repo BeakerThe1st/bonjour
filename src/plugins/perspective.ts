@@ -52,7 +52,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     ...(notEstablished ? ["SEVERE_TOXICITY"] : [""]),
   ];
   if (!flags.some(([key]) => flagsOfConcern.includes(key))) {
-    await message.reply(`did not match any of ${flags}`);
+    console.log("did not match any");
     return;
   }
   let muted = false;
