@@ -2,15 +2,16 @@ import { CommandRegistry, Command } from "../types";
 import { useCurrentClient } from ".";
 
 const commands: Map<string, Command> = new Map();
-let entriesLocked = false;
-let discordRegistrationPending = false;
 
-if (!discordRegistrationPending) {
+let bulkRegistrationPending = false;
+let bulkRegistrationComplete = false;
+
+if (!bulkRegistrationPending) {
+  bulkRegistrationPending = true;
   setTimeout(() => {
-    entriesLocked = true;
+    bulkRegistrationComplete = true;
     registerCommandsWithDiscord();
-  }, 6000);
-  discordRegistrationPending = true;
+  }, 15000);
 }
 
 const registerCommandsWithDiscord = async () => {
@@ -34,14 +35,13 @@ const registerCommandsWithDiscord = async () => {
 
 const useCommandRegistry = (): CommandRegistry => {
   const register = (command: Command): void => {
-    if (entriesLocked) {
-      throw new Error(
-        `Tried to register ${command.name} more than 6 seconds after first command registration`
-      );
-    }
     const { client } = useCurrentClient();
     commands.set(command.name, command);
-    client.emit("bonjourDebug", `Registered ${command.name} command`);
+    if (!bulkRegistrationComplete) {
+      client.emit("bonjourDebug", `Registered ${command.name} command`);
+    } else {
+      console.log(`${command.name} not submitted to Discord.`);
+    }
   };
   const getCommands = () => {
     return commands;

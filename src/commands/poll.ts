@@ -46,7 +46,7 @@ const getPollMessage = (messageId: string): MessageOptions => {
   }
   let yesTally = 0;
   let noTally = 0;
-  for (const [user, vote] of poll.users) {
+  for (const [, vote] of poll.users) {
     if (vote === "yes") {
       yesTally++;
     } else {
