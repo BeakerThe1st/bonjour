@@ -88,8 +88,8 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     embeds: [
       {
         title: `Automated Report`,
-        description: `Message by ${member} flagged in ${message.channel}\n${
-          !message.deleted ? `🔗 [Link to Message](${message.url})` : ""
+        description: `Message by ${member} flagged in ${message.channel}${
+          !message.deleted ? `\n🔗 [Link to Message](${message.url})` : ""
         }\n**Buttons don't work yet**. Mute manually if required. Testing to see how many false positives we get.`,
         color: "BLUE",
         fields: [
