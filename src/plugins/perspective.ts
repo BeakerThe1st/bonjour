@@ -49,17 +49,16 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   const notEstablished = !member.roles.cache.has("881503056091557978");
   const flagsOfConcern = [
     "IDENTITY_ATTACK",
-    ...(notEstablished ? ["SEVERE_TOXICITY"] : [""]),
+    ...(notEstablished ? ["SEVERE_TOXICITY"] : []),
   ];
   if (!flags.some(([key]) => flagsOfConcern.includes(key))) {
-    console.log("did not match any");
     return;
   }
   let muted = false;
   if (notEstablished) {
     try {
       await message.delete();
-      message = await message.channel.send(
+      await message.channel.send(
         `Message removed as a precaution. Awaiting moderator review.`
       );
       const role = await member.guild.roles.fetch("468957856855621640");
@@ -68,8 +67,14 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       }
       await member.roles.add(role);
       muted = true;
+      setTimeout(async () => {
+        try {
+          await member.roles.remove(role);
+        } catch {
+          //ignored
+        }
+      }, 1000 * 60 * 60 * 6);
     } catch {
-      await message.reply("oh no");
       //ignored
     }
   }
@@ -83,19 +88,18 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     embeds: [
       {
         title: `Automated Report`,
-        description: `Message by ${member} flagged in ${message.channel}. [🔗](${message.url}`,
+        description: `Message by ${member} flagged in ${message.channel}\n${
+          !message.deleted ? `🔗 [Link to Message](${message.url})` : ""
+        }\n**Buttons don't work yet** Mute manually if required. Only trying to see how many false positives we get.`,
+        color: "BLUE",
         fields: [
           {
             name: "Content",
-            value: `${message.content}`,
-          },
-          {
-            name: "Flags",
-            value: `${flags}`,
+            value: text,
           },
         ],
         footer: {
-          text: `User was ${muted ? "muted indefinitely" : "not muted"}.`,
+          text: `User was ${muted ? "muted for 6 hours" : "not muted"}.`,
         },
       },
     ],
@@ -106,13 +110,13 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
           {
             type: "BUTTON",
             customId: `perspective-accept-${member.id}`,
-            style: "PRIMARY",
+            style: "SUCCESS",
             label: muted ? "Keep muted" : "Mute user",
           },
           {
             type: "BUTTON",
             customId: `perspective-deny-${member.id}`,
-            style: "PRIMARY",
+            style: "DANGER",
             label: muted ? "Unmute" : "Ignore",
           },
         ],
