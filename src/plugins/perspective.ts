@@ -48,7 +48,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     const percent = Math.round((value as any).summaryScore.value * 1000) / 10;
     scores[key as keyof PerspectiveScores] = percent;
   }
-  if (message.channelId !== "923758797149831178") {
+  if (message.channelId === "923758797149831178") {
     await message.reply(`\`\`\`json\n${JSON.stringify(scores, null, 2)}\`\`\``);
   }
   if (scores.IDENTITY_ATTACK && scores.IDENTITY_ATTACK > 0.85) {
