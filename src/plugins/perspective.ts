@@ -52,6 +52,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     ...(notEstablished ? ["SEVERE_TOXICITY"] : [""]),
   ];
   if (!flags.some(([key]) => flagsOfConcern.includes(key))) {
+    await message.reply(`did not match any of ${flags}`);
     return;
   }
   let muted = false;
@@ -68,6 +69,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       await member.roles.add(role);
       muted = true;
     } catch {
+      await message.reply("oh no");
       //ignored
     }
   }
