@@ -160,7 +160,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   try {
     target = await guild.members.fetch(userId);
   } catch {
-    await interaction.editReply(`<@${userId}> is no longer in the guild.`);
+    await interaction.editReply(`<@${userId}> is no longer in the server.`);
     return;
   }
 
