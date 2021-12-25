@@ -154,8 +154,15 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (interactionType !== "perspective") {
     return;
   }
-  const target = await guild.members.fetch(userId);
   await interaction.deferReply({ ephemeral: true });
+  let target;
+  try {
+    target = await guild.members.fetch(userId);
+  } catch {
+    await interaction.editReply(`<@${userId}> is no longer in the server.`);
+    return;
+  }
+
   if (action === "deny") {
     //negative action
     if (actioned) {
@@ -165,7 +172,6 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
       actioned ? `${target} unmuted.` : `Successfully ignored report.`
     );
     await message.delete();
-    return;
   } else {
     //positive action
     if (!actioned) {
@@ -185,6 +191,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
           fields: oldEmbed.fields,
         },
       ],
+      components: [],
     });
   }
 });
