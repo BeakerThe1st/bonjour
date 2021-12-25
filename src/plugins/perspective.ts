@@ -150,10 +150,11 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     return;
   }
   const [oldEmbed] = message.embeds;
-  const [interactionType, action, userId, actioned] = customId.split("-");
+  const [interactionType, action, userId, actionedStr] = customId.split("-");
   if (interactionType !== "perspective") {
     return;
   }
+  const actioned = actioned === "true";
   await interaction.deferReply({ ephemeral: true });
   let target;
   try {
@@ -165,7 +166,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
 
   if (action === "deny") {
     //negative action
-    if (actioned === "true") {
+    if (actioned) {
       await target.roles.remove(await getMutedRole(guild));
     }
     await interaction.editReply(
@@ -174,7 +175,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await message.delete();
   } else {
     //positive action
-    if (actioned === "false") {
+    if (actioned) {
       await muteMemberForSixHours(target);
     }
     await interaction.editReply(
