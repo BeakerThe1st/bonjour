@@ -161,6 +161,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     target = await guild.members.fetch(userId);
   } catch {
     await interaction.editReply(`<@${userId}> is no longer in the server.`);
+    await message.delete();
     return;
   }
 
