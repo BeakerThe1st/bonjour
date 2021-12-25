@@ -1,8 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
-import { Message } from "discord.js";
+import { Guild, GuildMember, Interaction, Message } from "discord.js";
 import * as Bonjour from "../core";
 import { useCurrentClient } from "../core";
+
+const getMutedRole = async (guild: Guild) => {
+  const role = await guild.roles.fetch("468957856855621640");
+  if (!role) {
+    throw new Error("Muted role not found.");
+  }
+  return role;
+};
+
+const muteMemberForSixHours = async (member: GuildMember) => {
+  const role = await getMutedRole(member.guild);
+  if (member.roles.cache.has(role.id)) {
+    throw new Error("User is already muted.");
+  }
+  await member.roles.add(role);
+  setTimeout(async () => {
+    try {
+      await member.roles.remove(role);
+    } catch {
+      //ignored
+    }
+  }, 1000 * 60 * 60 * 6);
+};
 
 Bonjour.useEvent("messageCreate", async (message: Message) => {
   const { content: text, member } = message;
@@ -61,19 +84,8 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       await message.channel.send(
         `Message removed as a precaution. Awaiting moderator review.`
       );
-      const role = await member.guild.roles.fetch("468957856855621640");
-      if (!role) {
-        throw new Error();
-      }
-      await member.roles.add(role);
+      muteMemberForSixHours(member);
       muted = true;
-      setTimeout(async () => {
-        try {
-          await member.roles.remove(role);
-        } catch {
-          //ignored
-        }
-      }, 1000 * 60 * 60 * 6);
     } catch {
       //ignored
     }
@@ -90,7 +102,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
         title: `Automated Report`,
         description: `Message by ${member} flagged in ${message.channel}${
           !message.deleted ? `\n🔗 [Link to Message](${message.url})` : ""
-        }\n**Buttons don't work yet**. Action manually if required. Testing to see how many false positives we get.`,
+        }`,
         color: "BLUE",
         fields: [
           {
@@ -109,13 +121,17 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
         components: [
           {
             type: "BUTTON",
-            customId: `perspective-accept-${member.id}`,
+            customId: `perspective-accept-${member.id}-${
+              muted ? "true" : "false"
+            }`,
             style: "SUCCESS",
             label: muted ? "Keep muted" : "Mute user",
           },
           {
             type: "BUTTON",
-            customId: `perspective-deny-${member.id}`,
+            customId: `perspective-deny-${member.id}-${
+              muted ? "true" : "false"
+            }`,
             style: "DANGER",
             label: muted ? "Unmute" : "Ignore",
           },
@@ -123,4 +139,52 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       },
     ],
   });
+});
+
+Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
+  if (!interaction.isButton()) {
+    return;
+  }
+  const { customId, message, guild } = interaction;
+  if (!guild || !(message instanceof Message)) {
+    return;
+  }
+  const [oldEmbed] = message.embeds;
+  const [interactionType, action, userId, actioned] = customId.split("-");
+  if (interactionType !== "perspective") {
+    return;
+  }
+  const target = await guild.members.fetch(userId);
+  await interaction.deferReply({ ephemeral: true });
+  if (action === "deny") {
+    //negative action
+    if (actioned) {
+      await target.roles.remove(await getMutedRole(guild));
+    }
+    await interaction.editReply(
+      actioned ? `${target} unmuted.` : `Successfully ignored report.`
+    );
+    await message.delete();
+    return;
+  } else {
+    //positive action
+    if (!actioned) {
+      await muteMemberForSixHours(target);
+    }
+    await interaction.editReply(
+      actioned ? `Verified mute for ${target}.` : `Muted ${target} for 6 hours.`
+    );
+    await message.edit({
+      embeds: [
+        {
+          title: actioned ? `User mute verified.` : `User muted.`,
+          description: `${interaction.member} has ${
+            actioned ? `verified a mute on` : `muted`
+          } ${target}${actioned ? " for 6 hours." : ""}.`,
+          color: "RED",
+          fields: oldEmbed.fields,
+        },
+      ],
+    });
+  }
 });
