@@ -159,13 +159,13 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   try {
     target = await guild.members.fetch(userId);
   } catch {
-    await interaction.editReply(`<@${userId}> is no longer in the server.`);
+    await interaction.editReply(`<@${userId}> is no longer in the guild.`);
     return;
   }
 
   if (action === "deny") {
     //negative action
-    if (actioned) {
+    if (actioned === "true") {
       await target.roles.remove(await getMutedRole(guild));
     }
     await interaction.editReply(
@@ -174,7 +174,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await message.delete();
   } else {
     //positive action
-    if (!actioned) {
+    if (actioned === "false") {
       await muteMemberForSixHours(target);
     }
     await interaction.editReply(
