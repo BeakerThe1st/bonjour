@@ -154,7 +154,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (interactionType !== "perspective") {
     return;
   }
-  const actioned = actioned === "true";
+  const actioned = actionedStr === "true";
   await interaction.deferReply({ ephemeral: true });
   let target;
   try {
@@ -187,7 +187,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
           title: actioned ? `User mute verified.` : `User muted.`,
           description: `${interaction.member} has ${
             actioned ? `verified a mute on` : `muted`
-          } ${target}${actioned ? " for 6 hours." : ""}.`,
+          } ${target}${actioned ? " for 6 hours" : ""}.`,
           color: "RED",
           fields: oldEmbed.fields,
         },
