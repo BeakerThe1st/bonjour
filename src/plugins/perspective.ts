@@ -188,7 +188,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
           title: actioned ? `Mute Verified` : `User Muted`,
           description: `${interaction.member} has ${
             actioned ? `verified a mute on` : `muted`
-          } ${target}${actioned ? " for 6 hours" : ""}.`,
+          } ${target}${actioned ? "" : " for 6 hours"}`,
           color: "RED",
           fields: oldEmbed.fields,
         },
