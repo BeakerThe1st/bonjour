@@ -175,7 +175,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await message.delete();
   } else {
     //positive action
-    if (actioned) {
+    if (!actioned) {
       await muteMemberForSixHours(target);
     }
     await interaction.editReply(
