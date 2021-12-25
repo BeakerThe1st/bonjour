@@ -184,7 +184,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await message.edit({
       embeds: [
         {
-          title: actioned ? `User mute verified.` : `User muted.`,
+          title: actioned ? `Mute Verified` : `User Muted`,
           description: `${interaction.member} has ${
             actioned ? `verified a mute on` : `muted`
           } ${target}${actioned ? " for 6 hours" : ""}.`,
