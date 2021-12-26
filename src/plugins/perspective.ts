@@ -81,12 +81,17 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   await toxicityDoc.loadInfo();
   const messagesSheet = toxicityDoc.sheetsByTitle["Messages"];
 
+  let { content: sheetsContent } = message;
+  if (sheetsContent.startsWith(`+`) || sheetsContent.startsWith(`=`)) {
+    sheetsContent = `'${sheetsContent}`;
+  }
+
   const newRowNumber = (await messagesSheet.getRows()).length + 2;
   await messagesSheet.addRow([
     message.createdTimestamp,
     message.createdAt.toISOString(),
     message.author.id,
-    message.content,
+    sheetsContent,
     message.channelId,
     ...flags.map(([, value]) => value),
     `=AVERAGE(D${newRowNumber}:I${newRowNumber})`,
