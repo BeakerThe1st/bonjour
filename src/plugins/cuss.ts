@@ -95,6 +95,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     message.channelId,
     ...flags.map(([, value]) => value),
     `=AVERAGE(F${newRowNumber}:K${newRowNumber})`,
+    `=AVERAGE(L:${newRowNumber - 20}:L${newRowNumber})`,
   ]);
 
   if (message.channelId === "923758797149831178") {
