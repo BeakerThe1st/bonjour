@@ -80,11 +80,13 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     });
   await toxicityDoc.loadInfo();
   const messagesSheet = toxicityDoc.sheetsByTitle["Messages"];
+
   await messagesSheet.addRow([
     message.createdTimestamp,
     message.content,
     message.channelId,
     ...flags.map(([, value]) => value),
+    `=AVERAGE(D${messagesSheet.rowCount + 1}:I${messagesSheet.rowCount + 1})`,
   ]);
 
   if (message.channelId === "923758797149831178") {
