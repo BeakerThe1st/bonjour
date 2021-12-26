@@ -94,7 +94,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     sheetsContent,
     message.channelId,
     ...flags.map(([, value]) => value),
-    `=AVERAGE(D${newRowNumber}:I${newRowNumber})`,
+    `=AVERAGE(F${newRowNumber}:K${newRowNumber})`,
   ]);
 
   if (message.channelId === "923758797149831178") {
@@ -136,7 +136,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   await staffQueue.send({
     embeds: [
       {
-        title: `Automated Report`,
+        title: `CUSS Report`,
         description: `Message by ${member} flagged in ${message.channel}${
           !message.deleted ? `\n🔗 [Link to Message](${message.url})` : ""
         }`,
