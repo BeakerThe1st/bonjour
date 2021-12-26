@@ -73,22 +73,18 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       params: { key: PERSPECTIVE_KEY },
     }
   );
-  const flags = Object.entries(res.data.attributeScores).map(([key, value]) => [
-    key,
-    (value as any).summaryScore.value,
-  ]);
+  const flags = Object.entries(res.data.attributeScores)
+    .map(([key, value]) => [key, (value as any).summaryScore.value])
+    .sort((a, b) => {
+      return a[0].localeCompare(b[0]);
+    });
   await toxicityDoc.loadInfo();
   const messagesSheet = toxicityDoc.sheetsByTitle["Messages"];
   await messagesSheet.addRow([
     message.createdTimestamp,
     message.content,
     message.channelId,
-    flags[0][1],
-    flags[1][1],
-    flags[2][1],
-    flags[3][1],
-    flags[4][1],
-    flags[5][1],
+    ...flags.map(([, value]) => value),
   ]);
 
   if (message.channelId === "923758797149831178") {
