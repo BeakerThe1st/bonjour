@@ -78,6 +78,20 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     .sort((a, b) => {
       return a[0].localeCompare(b[0]);
     });
+
+  if (message.channelId === "923758797149831178") {
+    const sum = flags.reduce((a, b) => a + b[1], 0);
+    const cussScore = sum / flags.length || 0;
+    await message.reply(
+      flags.length > 0
+        ? `\`\`\`json\n${JSON.stringify([
+            flags,
+            ...["CUSS_SCORE", cussScore],
+          ])}\`\`\``
+        : `No flags found!`
+    );
+    return;
+  }
   await toxicityDoc.loadInfo();
   const messagesSheet = toxicityDoc.sheetsByTitle["Messages"];
 
@@ -97,15 +111,6 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     `=AVERAGE(F${newRowNumber}:K${newRowNumber})`,
     `=AVERAGE(L${newRowNumber - 20}:L${newRowNumber})`,
   ]);
-
-  if (message.channelId === "923758797149831178") {
-    await message.reply(
-      flags.length > 0
-        ? `\`\`\`json\n${JSON.stringify(flags)}\`\`\``
-        : `No flags found!`
-    );
-    return;
-  }
   const relevantFlags = flags.filter(([, value]) => value > 0.85);
   const notEstablished = !member.roles.cache.has("881503056091557978");
   const flagsOfConcern = [
