@@ -84,10 +84,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   const newRowNumber = (await messagesSheet.getRows()).length + 2;
   await messagesSheet.addRow([
     message.createdTimestamp,
-    message.createdAt.toLocaleString("en-AU", {
-      hour12: false,
-      timeZone: "UTC",
-    }),
+    message.createdAt.toISOString(),
     message.author.id,
     message.content,
     message.channelId,
