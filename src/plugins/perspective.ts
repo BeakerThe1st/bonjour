@@ -3,6 +3,21 @@ import axios from "axios";
 import { Guild, GuildMember, Interaction, Message } from "discord.js";
 import * as Bonjour from "../core";
 import { useCurrentClient } from "../core";
+import { GoogleSpreadsheet } from "google-spreadsheet";
+
+const toxicityDoc = new GoogleSpreadsheet(
+  "1gvVNLCRx9VN3-KgwYrE4WfEFy_6VK665PFkxPYJ1dvQ"
+);
+
+const { GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY } = process.env;
+if (!GOOGLE_CLIENT_EMAIL || !GOOGLE_PRIVATE_KEY) {
+  throw new Error("Google service account msising");
+}
+
+await toxicityDoc.useServiceAccountAuth({
+  client_email: GOOGLE_CLIENT_EMAIL,
+  private_key: GOOGLE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+});
 
 const getMutedRole = async (guild: Guild) => {
   const role = await guild.roles.fetch("468957856855621640");
@@ -58,9 +73,24 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
       params: { key: PERSPECTIVE_KEY },
     }
   );
-  const flags = Object.entries(res.data.attributeScores)
-    .filter(([, value]) => (value as any).summaryScore.value > 0.85)
-    .map(([key, value]) => [key, (value as any).summaryScore.value]);
+  const flags = Object.entries(res.data.attributeScores).map(([key, value]) => [
+    key,
+    (value as any).summaryScore.value,
+  ]);
+  await toxicityDoc.loadInfo();
+  const messagesSheet = toxicityDoc.sheetsByTitle["Messages"];
+  await messagesSheet.addRow([
+    message.createdTimestamp,
+    message.content,
+    message.channelId,
+    flags[0][1],
+    flags[1][1],
+    flags[2][1],
+    flags[3][1],
+    flags[4][1],
+    flags[5][1],
+  ]);
+
   if (message.channelId === "923758797149831178") {
     await message.reply(
       flags.length > 0
@@ -69,12 +99,13 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     );
     return;
   }
+  const relevantFlags = flags.filter(([, value]) => value > 0.85);
   const notEstablished = !member.roles.cache.has("881503056091557978");
   const flagsOfConcern = [
     "IDENTITY_ATTACK",
     ...(notEstablished ? ["SEVERE_TOXICITY"] : []),
   ];
-  if (!flags.some(([key]) => flagsOfConcern.includes(key))) {
+  if (!relevantFlags.some(([key]) => flagsOfConcern.includes(key))) {
     return;
   }
   let muted = false;
