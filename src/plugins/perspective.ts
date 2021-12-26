@@ -81,7 +81,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   await toxicityDoc.loadInfo();
   const messagesSheet = toxicityDoc.sheetsByTitle["Messages"];
 
-  const newRowNumber = (await messagesSheet.getRows()).length + 1;
+  const newRowNumber = (await messagesSheet.getRows()).length + 2;
   await messagesSheet.addRow([
     message.createdTimestamp,
     message.content,
