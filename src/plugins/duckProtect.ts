@@ -21,6 +21,8 @@ Bonjour.useEvent(
     if (!target || target instanceof Invite || target.id !== memberId) {
       return;
     }
-    (await guild.members.fetch("335006942797889549")).kick("DuckProtect™️");
+    await (
+      await guild.members.fetch("335006942797889549")
+    ).kick("DuckProtect™️");
   }
 );
