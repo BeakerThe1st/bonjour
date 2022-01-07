@@ -7,8 +7,8 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     return;
   }
 
-  if (message.author.id === "535722349132251136") {
-    /*genius bot id*/ return;
+  if (message.author.id === Bonjour.useCurrentClient().client.user?.id) {
+    return;
   }
 
   const numberOfImages = message.attachments.filter((attachment) => {
