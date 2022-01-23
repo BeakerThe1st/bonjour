@@ -73,7 +73,9 @@ app.post("/ban-appeal", async (req, res) => {
       });
     } else {
       return res.status(500).json({
-        error: "An unexpected error occurred while submitting the ban appeal.",
+        error: `An unexpected error occurred while submitting the ban appeal. (${
+          error.code ?? error.message ?? error
+        })`,
       });
     }
   }
