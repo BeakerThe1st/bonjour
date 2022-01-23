@@ -76,6 +76,9 @@ app.post("/ban-appeal", async (req, res) => {
           ],
         },
       ],
+      allowedMentions: {
+        users: [],
+      },
     });
     return res.status(200).json("Submitted appeal");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
