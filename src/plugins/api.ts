@@ -63,8 +63,22 @@ app.post("/ban-appeal", async (req, res) => {
           ],
         },
       ],
+      components: [
+        {
+          type: "ACTION_ROW",
+          components: [
+            {
+              type: "BUTTON",
+              customId: `appeal-unban-${id}`,
+              style: "SUCCESS",
+              label: "Unban",
+            },
+          ],
+        },
+      ],
     });
     return res.status(200).json("Submitted appeal");
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
     if (error.code === Constants.APIErrors.INVALID_FORM_BODY) {
       return res.status(400).json({
