@@ -11,6 +11,7 @@ app.get("/", (req, res) => {
   res.status(200).json("Hello World!");
 });
 
-app.listen(5001, () => {
-  useCurrentClient().client.emit("debug", "API server started");
+const port = process.env.PORT || 3001;
+app.listen(port, () => {
+  useCurrentClient().client.emit("debug", `API server started on port ${port}`);
 });
