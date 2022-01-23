@@ -18,7 +18,7 @@ app.get("/guild-info", async (req, res) => {
   res.status(200).json({
     iconURL: guild.iconURL({ dynamic: true }),
     members: guild.memberCount,
-    banner: guild.bannerURL(),
+    banner: guild.bannerURL({ size: 2048 }),
   });
 });
 
