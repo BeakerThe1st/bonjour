@@ -13,13 +13,13 @@ app.get("/", (req, res) => {
 
 app.get('/server-info', async (req, res) => {
   const { client } = useCurrentClient();
-  const guild = await client.guilds.fetch("332309672486895637");'
-  
+  const guild = await client.guilds.fetch("332309672486895637");
+
   res.status(200).json({
     iconURL: guild.iconURL(),
     members: guild.memberCount,
     banner: guild.bannerURL(),
-  })
+  });
 });
 
 const port = process.env.PORT || 3001;
