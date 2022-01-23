@@ -16,7 +16,7 @@ app.get("/guild-info", async (req, res) => {
   const guild = await client.guilds.fetch("332309672486895637");
 
   res.status(200).json({
-    iconURL: guild.iconURL(),
+    iconURL: guild.iconURL({ dynamic: true }),
     members: guild.memberCount,
     banner: guild.bannerURL(),
   });
