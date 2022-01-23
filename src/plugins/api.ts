@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   res.status(200).json("Hello World!");
 });
 
-app.get('/server-info', async (req, res) => {
+app.get("/guild-info", async (req, res) => {
   const { client } = useCurrentClient();
   const guild = await client.guilds.fetch("332309672486895637");
 
