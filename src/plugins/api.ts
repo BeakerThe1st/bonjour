@@ -66,10 +66,15 @@ app.post("/ban-appeal", async (req, res) => {
     });
     return res.status(200).json("Submitted appeal");
   } catch (error: any) {
+    if (error.code === Constants.APIErrors.INVALID_FORM_BODY) {
+      return res.status(400).json({
+        error: `${id} is not a valid user ID. Read the instructions to learn where to find your user ID.`,
+      });
+    }
     if (error.code === Constants.APIErrors.UNKNOWN_BAN) {
       return res.status(400).json({
         error:
-          "You are not banned from r/Apple. Ensure your User ID is correct.",
+          "You are not banned from r/Apple. Ensure your user ID is correct.",
       });
     } else {
       console.error(error);
