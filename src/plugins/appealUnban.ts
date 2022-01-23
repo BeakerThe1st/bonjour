@@ -13,7 +13,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (action !== "unban") {
     return;
   }
-  await interaction.deferReply();
+  await interaction.deferReply({ ephemeral: true });
   const { client } = Bonjour.useCurrentClient();
   try {
     const rApple = await client.guilds.fetch("332309672486895637");
@@ -26,7 +26,7 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   const { message } = interaction;
   if (message instanceof Message) {
     await message.edit({
-      content: `<@${userId}> unbanned by ${interaction.user}.`,
+      content: `<@${userId}> unbanned by ${interaction.user}`,
       components: [],
     });
   }
