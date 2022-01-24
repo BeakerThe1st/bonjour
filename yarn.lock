@@ -80,11 +80,6 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@pexxi/fold-to-ascii-ts@^5.1.1":
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/@pexxi/fold-to-ascii-ts/-/fold-to-ascii-ts-5.1.1.tgz#d2b0858cc26b6bbd49aea667edde5de44dab82c1"
-  integrity sha512-bUAtpjS14g2vKVok2F6Cyq1im0C1XAfGkl9+neH6kI37mj5+FUZR1vKleLVIw29O4nvJhZUaWrcXcY4iyzmM1A==
-
 "@sapphire/async-queue@^1.1.9":
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/@sapphire/async-queue/-/async-queue-1.1.9.tgz#ce69611c8753c4affd905a7ef43061c7eb95c01b"
@@ -153,6 +148,11 @@
     "@types/express-serve-static-core" "^4.17.18"
     "@types/qs" "*"
     "@types/serve-static" "*"
+
+"@types/fold-to-ascii@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@types/fold-to-ascii/-/fold-to-ascii-5.0.0.tgz#df5c9d420552f001a9bb4803c6afb0252e8514e1"
+  integrity sha512-zaaLJcf8jPuVVYl6v+mSMaOMJNgkrDsYweu7Oa5RODIKgX9+Yu6Ng6/IY9zylwIurt0iQiDM0SN8agCOhLrKUA==
 
 "@types/google-spreadsheet@^3.1.5":
   version "3.1.5"
@@ -892,6 +892,11 @@ flatted@^3.1.0:
   version "3.2.4"
   resolved "https://registry.yarnpkg.com/flatted/-/flatted-3.2.4.tgz#28d9969ea90661b5134259f312ab6aa7929ac5e2"
   integrity sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==
+
+fold-to-ascii@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/fold-to-ascii/-/fold-to-ascii-5.0.0.tgz#12986e02004abd0984a99f701e0707aa1c2ae0d0"
+  integrity sha512-HjtRWXC9aVit47DOEqvorgaQDiIyeX+frV3tM22RlllposIxnPXRM/vYoE6y6pwW57RdgahSe32Cu0vf4/UX1Q==
 
 follow-redirects@^1.14.0, follow-redirects@^1.14.4:
   version "1.14.7"

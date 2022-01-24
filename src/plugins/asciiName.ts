@@ -1,4 +1,4 @@
-import ASCIIFolder from "@pexxi/fold-to-ascii-ts";
+import ASCIIFolder from "fold-to-ascii";
 import { GuildMember, PartialGuildMember } from "discord.js";
 import { useEvent } from "../core";
 
