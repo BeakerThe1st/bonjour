@@ -32,6 +32,8 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   }
   const unbanChannel = await client.channels.fetch("934958626257375244");
   if (unbanChannel?.isText()) {
-    await unbanChannel.send(`<@${userId}>, your appeal was successful and you have been unbanned. You may rejoin the server at https:///discord.gg/apple`);");
+    await unbanChannel.send(
+      `<@${userId}>, your appeal was successful and you have been unbanned. You may rejoin the server at https:///discord.gg/apple`
+    );
   }
 });
