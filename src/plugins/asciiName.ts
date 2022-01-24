@@ -5,8 +5,9 @@ import { useEvent } from "../core";
 const foldNickname = async (member: GuildMember) => {
   const { displayName } = member;
   const newName =
-    ASCIIFolder.foldReplacing(displayName) ||
+    ASCIIFolder.foldReplacing(displayName).substring(0, 32) ||
     `Illegal Nickname ${Math.floor(1000 + Math.random() * 9000)}`;
+  console.log(`Folded ${displayName} to ${newName}`);
   if (newName !== displayName) {
     try {
       await member.setNickname(newName, "Illegal Nickname");
