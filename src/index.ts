@@ -15,6 +15,11 @@ userGroups.set("334888870955188235", 30); // Support Enthusiasts
 userGroups.set("340485917150150656", 25); // Honorary Members
 userGroups.set("338950814108483586", 20); // Plus
 
+userGroups.set("860391662441070592", 50); // Ban appeal server bots role
+
+userGroups.set("338150187983699988", 100); // Staff server admins
+userGroups.set("717946983427342396", 50); // Staff server mods
+
 const client = new BonjourClient(DISCORD_TOKEN, {
   intents: [
     "GUILDS",
