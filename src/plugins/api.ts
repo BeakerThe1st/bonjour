@@ -3,10 +3,12 @@ import cors from "cors";
 import { useCurrentClient } from "../core";
 
 import { Constants } from "discord.js";
+import morgan from "morgan";
 
 const app = express();
 
 app.use(cors());
+app.use(morgan("combined"));
 app.use(express.json());
 
 app.get("/", (req, res) => {
