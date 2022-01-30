@@ -34,8 +34,20 @@ Bonjour.useCommand(
     const webhook = await channel.createWebhook(user.username, {
       avatar: user.displayAvatarURL(),
     });
-    await webhook.send(message);
-    await webhook.delete();
+    setTimeout(async () => {
+      try {
+        await webhook.send(message);
+      } catch {
+        //ignored
+      }
+      setTimeout(async () => {
+        try {
+          await webhook.delete();
+        } catch {
+          //ignored
+        }
+      });
+    }, 3000);
     return `Successfully impersonated ${user.username}!`;
   }
 );
