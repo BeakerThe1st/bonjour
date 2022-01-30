@@ -36,7 +36,12 @@ Bonjour.useCommand(
     });
     setTimeout(async () => {
       try {
-        await webhook.send(message);
+        await webhook.send({
+          content: message,
+          allowedMentions: {
+            parse: [],
+          },
+        });
         await webhook.delete();
       } catch {
         //ignored
