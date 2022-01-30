@@ -37,17 +37,11 @@ Bonjour.useCommand(
     setTimeout(async () => {
       try {
         await webhook.send(message);
+        await webhook.delete();
       } catch {
         //ignored
       }
-      setTimeout(async () => {
-        try {
-          await webhook.delete();
-        } catch {
-          //ignored
-        }
-      });
-    }, 3000);
-    return `Successfully impersonated ${user.username}!`;
+    }, 1000);
+    return `Queued ${user} impersonation!!`;
   }
 );
