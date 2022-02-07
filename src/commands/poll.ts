@@ -44,15 +44,15 @@ const getPollMessage = (messageId: string): MessageOptions => {
   if (!poll) {
     throw new Error("Poll does not exist.");
   }
-  let yesTally = 0;
-  let noTally = 0;
-  for (const [, vote] of poll.users) {
-    if (vote === "yes") {
-      yesTally++;
-    } else {
-      noTally++;
+  const voteCounts = Array.from(poll.users.values()).reduce(
+    (acc, vote) => {
+      return Object.assign(acc, { [vote]: acc[vote] + 1 });
+    },
+    {
+      yes: 0,
+      no: 0,
     }
-  }
+  );
   return {
     embeds: [
       {
@@ -60,12 +60,12 @@ const getPollMessage = (messageId: string): MessageOptions => {
         fields: [
           {
             name: "Yes",
-            value: `${yesTally}`,
+            value: `${voteCounts.yes}`,
             inline: true,
           },
           {
             name: "No",
-            value: `${noTally}`,
+            value: `${voteCounts.no}`,
             inline: true,
           },
         ],
