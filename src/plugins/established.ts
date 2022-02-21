@@ -9,8 +9,8 @@ Bonjour.useEvent("typingStart", async (typing: Typing) => {
   if (!member?.joinedTimestamp) {
     return;
   }
-  const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-  if (member.joinedTimestamp > weekAgo) {
+  const threeDaysAgo = Date.now() - 3 * 24 * 60 * 60 * 1000;
+  if (member.joinedTimestamp > threeDaysAgo) {
     return;
   }
 
