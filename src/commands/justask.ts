@@ -11,11 +11,13 @@ Bonjour.useCommandRegistry().register({
 Bonjour.useCommand(
   "justask",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
-    const message =
-      '**Please don\'t ask to ask, just ask.**\nFor example, instead of saying "can someone pls help me with me with muh iphone???", say "My iPhone 13 mini won\'t turn on, can anyone help?".\nhttps://dontasktoask.com/';
-    await interaction.channel?.send({
-      content: message,
-    });
-    return `${interaction.user} used the the justask prompt in ${interaction.channel}.`;
+    const { channel } = interaction;
+    if (!channel?.isText()) {
+      throw new Error("That command must be run in a text channel.");
+    }
+    await channel.send(
+      `**Please don't ask to ask, just ask.**\nFor example, instead of saying "can someone pls help me with me with muh iphone???", say "My iPhone 13 mini won't turn on, can anyone help?".\nhttps://dontasktoask.com/`
+    );
+    return `Successfully used the the justask prompt in ${interaction.channel}.`;
   }
 );
