@@ -21,7 +21,7 @@ Bonjour.useCommand(
     if (!channel?.isText()) {
       throw new Error("That command must be run in a text channel.");
     }
-    const user = interaction.options.getUser("user", true);
+    const user = interaction.options.getUser("user");
     return `${
       user ? `${user}, \n` : ""
     }**Please don't ask to ask, just ask.**\nFor example, instead of saying "can someone pls help me with me with muh iphone???", say "My iPhone 13 mini won't turn on, can anyone help?".\nhttps://dontasktoask.com/`;
