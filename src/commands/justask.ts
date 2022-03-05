@@ -16,7 +16,7 @@ Bonjour.useCommandRegistry().register({
 
 Bonjour.useCommand(
   "justask",
-  async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
+  (interaction: CommandInteraction): Bonjour.CommandResponse => {
     const { channel } = interaction;
     if (!channel?.isText()) {
       throw new Error("That command must be run in a text channel.");
