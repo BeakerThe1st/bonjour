@@ -54,9 +54,9 @@ Bonjour.useCommand(
     });
     return `<#${category.id}> is now ${isOpening ? "open" : "closed"}.${
       unlockedChildChannels
-        ? `\nPlease note that \`${unlockedChildChannels.join(
-            ", "
-          )}\` were not synced with the category and may have not been affected.`
+        ? `\nPlease note that \`${unlockedChildChannels.join(", ")}\` ${
+            unlockedChildChannels.length > 1 ? "were" : "was"
+          } not synced with the category and may have not been affected.`
         : ""
     }`;
   }
