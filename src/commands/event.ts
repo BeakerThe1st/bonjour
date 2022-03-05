@@ -14,11 +14,12 @@ Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
     image: "https://i.imgur.com/PLMut3e.png",
   };
   const afterEvent = Date.now() > event.timestamp;
+  const discordTimestamp = event.timestamp / 1000;
   const embed = new MessageEmbed({
     title: `${event.name}`,
     description: `Apple's ${event.name} event ${
       afterEvent ? "started" : "starts"
-    } at <t:${event.timestamp}>`,
+    } at <t:${discordTimestamp}>`,
     color: "#1afefd",
     thumbnail: {
       url: event.image,
@@ -26,9 +27,9 @@ Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
     fields: [
       {
         name: "Time to Event",
-        value: `Event ${afterEvent ? "began" : "begins"} <t:${
-          event.timestamp / 1000
-        }:R>`,
+        value: `Event ${
+          afterEvent ? "began" : "begins"
+        } <t:${discordTimestamp}:R>`,
       },
     ],
     footer: {
