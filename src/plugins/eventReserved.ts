@@ -12,7 +12,7 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   if (!member) {
     return;
   }
-  const eventReservedRoleId = "898095817385185330";
+  const eventReservedRoleId = "949547512803516476";
   if (member.roles.cache.has(eventReservedRoleId)) {
     return;
   }
