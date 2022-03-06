@@ -165,13 +165,10 @@ Bonjour.useCommand(
         throw new Error("That command may only be run in a channel.");
       }
       const intervalStr = interaction.options.getString("interval");
-      const interval = parseDuration(
-        interaction.options.getString("interval") ?? "0"
-      );
-      updatePromptInterval(
-        intervalStr ? parseDuration(intervalStr) : currentEvent.interval,
-        interaction.channel
-      );
+      const interval = intervalStr
+        ? parseDuration(intervalStr)
+        : currentEvent.interval;
+      updatePromptInterval(interval, interaction.channel);
 
       return `Started event mode with image ${
         currentEvent.image
