@@ -22,7 +22,7 @@ const currentEvent: Event = {
   name: "Peek Performance",
   timestamp: 1646762400000,
   image: "https://i.imgur.com/PLMut3e.png",
-  interval: 1000 * 60 * 10,
+  interval: 1000 * 5,
 };
 
 Bonjour.useCommandRegistry().register({
