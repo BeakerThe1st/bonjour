@@ -34,6 +34,8 @@
     "fold-to-ascii": "^5.0.0",
     "google-spreadsheet": "^3.2.0",
     "morgan": "^1.10.0",
+    "parse-duration": "^1.0.2",
+    "pretty-ms": "^7.0.1",
     "stop-discord-phishing": "^0.2.0",
     "tesseract.js": "^2.1.5",
     "ts-node": "^10.4.0",
