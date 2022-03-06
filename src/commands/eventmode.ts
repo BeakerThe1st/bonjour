@@ -4,6 +4,9 @@ import {
   MessageEmbed,
   MessageOptions,
 } from "discord.js";
+import parseDuration from "parse-duration";
+import prettyMs from "pretty-ms";
+
 import * as Bonjour from "../core";
 
 interface Event {
@@ -11,6 +14,7 @@ interface Event {
   timestamp: number;
   image: string;
   promptInterval?: number;
+  timer?: NodeJS.Timer;
 }
 
 const currentEvent: Event = {
@@ -135,14 +139,56 @@ const createEventModePrompt = (event: Event): MessageOptions => {
 
 Bonjour.useCommand(
   "eventmode",
-  async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
+  (interaction: CommandInteraction): Bonjour.CommandResponse => {
     const subCommandGroup = interaction.options.getSubcommandGroup(false);
     const subCommand = interaction.options.getSubcommand();
-    return `This feature is not implemented yet, stay tuned!\n\`${subCommandGroup}\` \`${subCommand}\``;
+
+    if (subCommandGroup === "set") {
+      handleSet(interaction, subCommand);
+    }
+    if (subCommand === "start") {
+      if (currentEvent.timer) {
+        return "Event mode is already running.";
+      }
+      currentEvent.image = interaction.options.getString("image_url", true);
+      currentEvent.promptInterval = parseDuration(
+        interaction.options.getString("interval", true)
+      );
+      currentEvent.timer = setInterval(async () => {
+        try {
+          await interaction.channel?.send(createEventModePrompt(currentEvent));
+        } catch {
+          //ignored
+        }
+      }, currentEvent.promptInterval);
+    } else if (subCommand === "stop") {
+      if (!currentEvent.timer) {
+        return `Event mode is not running.`;
+      }
+      clearInterval(currentEvent.timer);
+      return `Event mode stopped.`;
+    } else {
+      const user = interaction.options.getUser("user", true);
+      return Object.assign(createEventModePrompt(currentEvent), {
+        content: `${user}`,
+      });
+    }
+    throw new Error("Exhausted all potential cases");
   }
 );
 
-/*const handleSet = (
+const handleSet = (
   interaction: CommandInteraction,
   subCommand: string
-): Bonjour.CommandResponsePromise => {};*/
+): Bonjour.CommandResponse => {
+  if (subCommand === "image") {
+    const imageUrl = interaction.options.getString("image_url", true);
+    currentEvent.image = imageUrl;
+    return `Event mode prompt image set to ${imageUrl}.`;
+  } else {
+    const interval = interaction.options.getString("interval", true);
+    const duration = parseDuration(interval);
+    currentEvent.promptInterval = duration;
+    return `Event mode prompt interval set to \`${prettyMs(duration)}.\``;
+  }
+};
