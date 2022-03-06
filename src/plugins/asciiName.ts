@@ -4,7 +4,6 @@ import { useEvent } from "../core";
 
 const foldNickname = async (member: GuildMember) => {
   const { displayName } = member;
-  console.log(`update for ${displayName}`);
   const newName = ASCIIFolder.foldReplacing(displayName);
   if (newName === displayName) {
     return;
