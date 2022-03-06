@@ -177,7 +177,6 @@ Bonjour.useCommand(
       if (!currentEvent.timer) {
         return `Event mode is not running.`;
       }
-      currentEvent.interval = 0;
       clearInterval(currentEvent.timer);
       return `Event mode stopped.`;
     } else {
