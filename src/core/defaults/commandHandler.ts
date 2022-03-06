@@ -27,6 +27,6 @@ useEvent("interactionCreate", async (interaction: Interaction) => {
       interaction.editReply(response);
     }
   } catch (error) {
-    interaction.editReply(`${error}`);
+    await interaction.editReply(`${error}`);
   }
 });
