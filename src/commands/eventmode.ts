@@ -195,6 +195,9 @@ Bonjour.useCommand(
       const user = interaction.options.getUser("user", true);
       return Object.assign(createEventModePrompt(currentEvent), {
         content: `${user}`,
+        allowedMentions: {
+          users: [user.id],
+        },
       });
     }
   }
