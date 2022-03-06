@@ -144,7 +144,7 @@ Bonjour.useCommand(
     const subCommand = interaction.options.getSubcommand();
 
     if (subCommandGroup === "set") {
-      handleSet(interaction, subCommand);
+      return handleSet(interaction, subCommand);
     }
     if (subCommand === "start") {
       if (currentEvent.timer) {
@@ -161,6 +161,9 @@ Bonjour.useCommand(
           //ignored
         }
       }, currentEvent.promptInterval);
+      return `Started event mode with image ${
+        currentEvent.image
+      } and interval ${prettyMs(currentEvent.promptInterval)}`;
     } else if (subCommand === "stop") {
       if (!currentEvent.timer) {
         return `Event mode is not running.`;
@@ -173,7 +176,6 @@ Bonjour.useCommand(
         content: `${user}`,
       });
     }
-    throw new Error("Exhausted all potential cases");
   }
 );
 
