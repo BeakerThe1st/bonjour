@@ -15,6 +15,7 @@ interface Event {
   name: string;
   timestamp: number;
   image: string;
+  interval: number;
   timer?: NodeJS.Timer;
 }
 
@@ -22,6 +23,7 @@ const currentEvent: Event = {
   name: "Peek Performance",
   timestamp: 1646762400000,
   image: "https://i.imgur.com/PLMut3e.png",
+  interval: 1000 * 60 * 10,
 };
 
 Bonjour.useCommandRegistry().register({
@@ -141,6 +143,7 @@ const updatePromptInterval = (interval: number, channel: TextBasedChannel) => {
   if (timer) {
     clearInterval(timer);
   }
+  currentEvent.interval = interval;
   currentEvent.timer = setInterval(async () => {
     try {
       await channel.send(createEventModePrompt(currentEvent));
@@ -170,10 +173,14 @@ Bonjour.useCommand(
       if (!interaction.channel) {
         throw new Error("That command may only be run in a channel.");
       }
+      const intervalStr = interaction.options.getString("interval");
       const interval = parseDuration(
-        interaction.options.getString("interval", true)
+        interaction.options.getString("interval") ?? "0"
       );
-      updatePromptInterval(interval, interaction.channel);
+      updatePromptInterval(
+        intervalStr ? parseDuration(intervalStr) : currentEvent.interval,
+        interaction.channel
+      );
 
       return `Started event mode with image ${
         currentEvent.image
