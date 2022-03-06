@@ -136,7 +136,7 @@ const createEventModePrompt = (event: Event): MessageOptions => {
 Bonjour.useCommand(
   "eventmode",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
-    const subCommandGroup = interaction.options.getSubcommandGroup();
+    const subCommandGroup = interaction.options.getSubcommandGroup(false);
     const subCommand = interaction.options.getSubcommand();
     return `This feature is not implemented yet, stay tuned!\n\`${subCommandGroup}\` \`${subCommand}\``;
   }
