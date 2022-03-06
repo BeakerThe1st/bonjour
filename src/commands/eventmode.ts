@@ -215,6 +215,6 @@ const handleSet = (
     const intervalStr = interaction.options.getString("interval", true);
     const interval = parseDuration(intervalStr);
     updatePromptInterval(interval, interaction.channel);
-    return `Event mode prompt interval set to \`${prettyMs(interval)}.\``;
+    return `Event mode prompt interval set to \`${prettyMs(interval)}\`.`;
   }
 };
