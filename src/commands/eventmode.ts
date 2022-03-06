@@ -3,6 +3,8 @@ import {
   MessageActionRow,
   MessageEmbed,
   MessageOptions,
+  TextBasedChannel,
+  TextChannel,
 } from "discord.js";
 import parseDuration from "parse-duration";
 import prettyMs from "pretty-ms";
@@ -13,7 +15,6 @@ interface Event {
   name: string;
   timestamp: number;
   image: string;
-  promptInterval?: number;
   timer?: NodeJS.Timer;
 }
 
@@ -37,13 +38,11 @@ Bonjour.useCommandRegistry().register({
           name: "image_url",
           description: "Image URL for event mode prompt.",
           type: "STRING",
-          required: true,
         },
         {
           name: "interval",
           description: "Interval between event mode prompts.",
           type: "STRING",
-          required: true,
         },
       ],
     },
@@ -137,6 +136,20 @@ const createEventModePrompt = (event: Event): MessageOptions => {
   return { embeds: [embed], components: [actionRow] };
 };
 
+const updatePromptInterval = (interval: number, channel: TextBasedChannel) => {
+  const { timer } = currentEvent;
+  if (timer) {
+    clearInterval(timer);
+  }
+  currentEvent.timer = setInterval(async () => {
+    try {
+      await channel.send(createEventModePrompt(currentEvent));
+    } catch {
+      //ignored
+    }
+  }, interval);
+};
+
 Bonjour.useCommand(
   "eventmode",
   (interaction: CommandInteraction): Bonjour.CommandResponse => {
@@ -150,20 +163,21 @@ Bonjour.useCommand(
       if (currentEvent.timer) {
         return "Event mode is already running.";
       }
-      currentEvent.image = interaction.options.getString("image_url", true);
-      currentEvent.promptInterval = parseDuration(
+      const image = interaction.options.getString("image_url");
+      if (image) {
+        currentEvent.image = image;
+      }
+      if (!interaction.channel) {
+        throw new Error("That command may only be run in a channel.");
+      }
+      const interval = parseDuration(
         interaction.options.getString("interval", true)
       );
-      currentEvent.timer = setInterval(async () => {
-        try {
-          await interaction.channel?.send(createEventModePrompt(currentEvent));
-        } catch {
-          //ignored
-        }
-      }, currentEvent.promptInterval);
+      updatePromptInterval(interval, interaction.channel);
+
       return `Started event mode with image ${
         currentEvent.image
-      } and interval ${prettyMs(currentEvent.promptInterval)}`;
+      } and interval ${prettyMs(interval)}`;
     } else if (subCommand === "stop") {
       if (!currentEvent.timer) {
         return `Event mode is not running.`;
@@ -188,9 +202,12 @@ const handleSet = (
     currentEvent.image = imageUrl;
     return `Event mode prompt image set to ${imageUrl}.`;
   } else {
-    const interval = interaction.options.getString("interval", true);
-    const duration = parseDuration(interval);
-    currentEvent.promptInterval = duration;
-    return `Event mode prompt interval set to \`${prettyMs(duration)}.\``;
+    if (!interaction.channel) {
+      throw new Error("That command may only be run in a channel.");
+    }
+    const intervalStr = interaction.options.getString("interval", true);
+    const interval = parseDuration(intervalStr);
+    updatePromptInterval(interval, interaction.channel);
+    return `Event mode prompt interval set to \`${prettyMs(interval)}.\``;
   }
 };
