@@ -4,7 +4,6 @@ import {
   MessageEmbed,
   MessageOptions,
   TextBasedChannel,
-  TextChannel,
 } from "discord.js";
 import parseDuration from "parse-duration";
 import prettyMs from "pretty-ms";
@@ -55,16 +54,8 @@ Bonjour.useCommandRegistry().register({
     },
     {
       name: "prompt",
-      description: "Mentions a user with the event mode prompt.",
+      description: "Forces the event mode prompt.",
       type: "SUB_COMMAND",
-      options: [
-        {
-          name: "user",
-          description: "User to mention.",
-          type: "USER",
-          required: true,
-        },
-      ],
     },
     {
       name: "set",
@@ -192,13 +183,7 @@ Bonjour.useCommand(
       clearInterval(currentEvent.timer);
       return `Event mode stopped.`;
     } else {
-      const user = interaction.options.getUser("user", true);
-      return Object.assign(createEventModePrompt(currentEvent), {
-        content: `${user}`,
-        allowedMentions: {
-          users: [user.id],
-        },
-      });
+      return createEventModePrompt(currentEvent);
     }
   }
 );
