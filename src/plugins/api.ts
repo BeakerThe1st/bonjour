@@ -1,4 +1,5 @@
 import express from "express";
+import rateLimit from "express-rate-limit";
 import cors from "cors";
 import { useCurrentClient } from "../core";
 
@@ -7,9 +8,17 @@ import morgan from "morgan";
 
 const app = express();
 
+const limit = rateLimit({
+	windowMs: 24 * 60 * 60 * 1000, // 24 hours
+	max: 1, // 1 request per window
+	standardHeaders: true, // Returns the `RateLimit-*` headers
+	legacyHeaders: false, // Disables the `X-RateLimit-*` headers
+})
+
 app.use(cors());
 app.use(morgan("combined"));
 app.use(express.json());
+app.use("/ban-appeal", limit);
 
 app.get("/", (req, res) => {
   res.status(200).json("Hello World!");
