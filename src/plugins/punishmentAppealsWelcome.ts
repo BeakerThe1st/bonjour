@@ -1,4 +1,4 @@
-import { GuildMember, PartialGuildMember } from "discord.js";
+import { GuildMember, PartialGuildMember, Util } from "discord.js";
 import * as Bonjour from "../core";
 
 Bonjour.useEvent(
@@ -38,7 +38,7 @@ Bonjour.useEvent(
             While you're in this channel, be sure to check out our rules over in <#476691390332403723>.
             
             You may see how long is left on your mute by using the \`!timeleft\` command. If your mute is permanent, please wait patiently and a staff member will review your case. If a staff member does not contact you within 24 hours, feel free to DM <@582568116748550144>.`,
-            color: "BLUE",
+            color: Util.resolveColor("BLUE"),
           },
         ],
       });

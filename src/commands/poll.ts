@@ -3,6 +3,7 @@ import {
   Interaction,
   Message,
   MessageOptions,
+  Util,
 } from "discord.js";
 import * as Bonjour from "../core";
 
@@ -69,7 +70,7 @@ const getPollMessage = (messageId: string): MessageOptions => {
             inline: true,
           },
         ],
-        color: "BLURPLE",
+        color: Util.resolveColor("BLURPLE"),
       },
     ],
     components: [

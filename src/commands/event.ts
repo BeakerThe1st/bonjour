@@ -1,4 +1,4 @@
-import { MessageEmbed } from "discord.js";
+import { MessageEmbed, Util } from "discord.js";
 import * as Bonjour from "../core";
 
 Bonjour.useCommandRegistry().register({
@@ -20,7 +20,7 @@ Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
     description: `Apple's ${event.name} event ${
       afterEvent ? "started" : "starts"
     } at <t:${discordTimestamp}>`,
-    color: "#1afefd",
+    color: Util.resolveColor("#1afefd"),
     thumbnail: {
       url: event.image,
     },

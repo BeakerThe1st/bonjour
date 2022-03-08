@@ -16,28 +16,20 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   }).size;
 
   if (numberOfImages < 1 || numberOfImages !== message.attachments.size) {
-    try {
-      await message.delete();
-      const reply = await message.channel.send(
-        `${message.author}, please only post images in this channel.`
-      );
-      setTimeout(async () => {
-        try {
-          await reply.delete();
-        } catch {
-          //ignored
-        }
-      }, 5000);
-    } catch {
-      //ignored
-    }
+    await message.delete();
+    const reply = await message.channel.send(
+      `${message.author}, please only post images in this channel.`
+    );
+    setTimeout(async () => {
+      try {
+        await reply.delete();
+      } catch {
+        //ignored
+      }
+    }, 5000);
     return;
   }
-  try {
-    await message.react("👍");
-    await message.react("❤️");
-    await message.react("😲");
-  } catch {
-    //ignored
-  }
+  await message.react("👍");
+  await message.react("❤️");
+  await message.react("😲");
 });

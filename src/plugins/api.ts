@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import { useCurrentClient } from "../core";
 
-import { Constants } from "discord.js";
+import { Constants, Util } from "discord.js";
 import morgan from "morgan";
 
 const app = express();
@@ -46,7 +46,7 @@ app.post("/ban-appeal", async (req, res) => {
         {
           title: "Ban Appeal",
           description: `<@${id}>`,
-          color: "BLUE",
+          color: Util.resolveColor("BLUE"),
           fields: [
             {
               name: "User",
