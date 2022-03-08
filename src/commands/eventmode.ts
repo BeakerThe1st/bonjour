@@ -21,7 +21,7 @@ interface Event {
 const currentEvent: Event = {
   name: "Peek Performance",
   timestamp: 1646762400000,
-  image: "https://i.imgur.com/PLMut3e.png",
+  image: "https://i.imgur.com/4auYarH.png",
   interval: 1000 * 5,
 };
 
