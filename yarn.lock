@@ -2115,13 +2115,6 @@ slash@^3.0.0:
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
   integrity sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=
 
-stop-discord-phishing@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/stop-discord-phishing/-/stop-discord-phishing-0.2.0.tgz#6c702922df3c96782b355bed77d4d9641d7043ca"
-  integrity sha512-O0L9+VMT9t98jNyRJ2SOTUbHfuoHAZTzxN9XspHMm2/g45/QLVVBddAlnjhAR86qSralxjLL6pjYcZc4EEH5WQ==
-  dependencies:
-    axios "^0.24.0"
-
 string-width@^4.0.0, string-width@^4.1.0, string-width@^4.2.2:
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/string-width/-/string-width-4.2.3.tgz#269c7117d27b05ad2e536830a8ec895ef9c6d010"
