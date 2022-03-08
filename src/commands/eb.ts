@@ -14,8 +14,9 @@ Bonjour.useCommandRegistry().register({
   ],
   permissionLevel: 50,
 });
+
 Bonjour.useCommand(
-  "emute",
+  "eb",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
     const member = interaction.options.getMember("user", true);
     if (!(member instanceof GuildMember)) {
