@@ -4,6 +4,7 @@ import {
   MessageEmbed,
   MessageOptions,
   TextBasedChannel,
+  Util,
 } from "discord.js";
 import parseDuration from "parse-duration";
 import prettyMs from "pretty-ms";
@@ -21,7 +22,7 @@ interface Event {
 const currentEvent: Event = {
   name: "Peek Performance",
   timestamp: 1646762400000,
-  image: "https://i.imgur.com/4auYarH.png",
+  image: "https://i.imgur.com/2PoGhNQ.png",
   interval: 1000 * 5,
 };
 
@@ -102,7 +103,7 @@ const createEventModePrompt = (event: Event): MessageOptions => {
     image: {
       url: event.image,
     },
-    color: "#1afefd",
+    color: Util.resolveColor("#1afefd"),
   });
   const actionRow = new MessageActionRow({
     components: [
@@ -133,6 +134,7 @@ const updatePromptInterval = (interval: number, channel: TextBasedChannel) => {
   const { timer } = currentEvent;
   if (timer) {
     clearInterval(timer);
+    currentEvent.timer = undefined;
   }
   currentEvent.interval = interval;
   currentEvent.timer = setInterval(async () => {
@@ -178,6 +180,7 @@ Bonjour.useCommand(
         return `Event mode is not running.`;
       }
       clearInterval(currentEvent.timer);
+      currentEvent.timer = undefined;
       return `Event mode stopped.`;
     } else {
       return createEventModePrompt(currentEvent);
