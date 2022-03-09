@@ -1,6 +1,6 @@
 import express from "express";
-import rateLimit from "express-rate-limit";
 import cors from "cors";
+import Keyv from "keyv";
 import { useCurrentClient } from "../core";
 
 import { Constants } from "discord.js";
@@ -8,17 +8,12 @@ import morgan from "morgan";
 
 const app = express();
 
-const limit = rateLimit({
-	windowMs: 24 * 60 * 60 * 1000, // 24 hours
-	max: 1, // 1 request per window
-	standardHeaders: true, // Returns the `RateLimit-*` headers
-	legacyHeaders: false, // Disables the `X-RateLimit-*` headers
-})
+const banned = new Keyv('postgresql://user:pass@localhost:5432/dbname'); // Set this to a valid PGSQL instance or set to just Keyv() for an in-memory solution.
+banned.on('error', err => console.error('Keyv connection error:', err));
 
 app.use(cors());
 app.use(morgan("combined"));
 app.use(express.json());
-app.use("/ban-appeal", limit);
 
 app.get("/", (req, res) => {
   res.status(200).json("Hello World!");
@@ -49,6 +44,11 @@ app.post("/ban-appeal", async (req, res) => {
     const ban = await rApple.bans.fetch(id);
     if (!appealChannel || !appealChannel.isText()) {
       throw new Error("Could not find appeal channel");
+    }
+    if (await banned.get(id)) {
+      return res.status(400).json({
+        error: "You have already submitted a ban appeal.",
+      });
     }
     await appealChannel.send({
       embeds: [
@@ -91,6 +91,7 @@ app.post("/ban-appeal", async (req, res) => {
         users: [],
       },
     });
+    await banned.set(id, true);
     return res.status(200).json("Submitted appeal");
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
