@@ -1,5 +1,5 @@
 import ASCIIFolder from "fold-to-ascii";
-import { GuildMember, PartialGuildMember } from "discord.js";
+import { GuildMember, PartialGuildMember, Util } from "discord.js";
 import { useEvent } from "../core";
 
 const foldNickname = async (member: GuildMember) => {
@@ -24,7 +24,7 @@ const foldNickname = async (member: GuildMember) => {
         },
         title: "Nickname Changed",
         description: `Your display name was found to violate server rules. Your nickname was changed to **${newName}**.`,
-        color: "RED",
+        color: Util.resolveColor("BLUE"),
       },
     ],
   });

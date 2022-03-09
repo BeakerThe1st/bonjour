@@ -1,4 +1,4 @@
-import { CommandInteraction } from "discord.js";
+import { CommandInteraction, Util } from "discord.js";
 import * as Bonjour from "../core";
 
 Bonjour.useCommandRegistry().register({
@@ -30,7 +30,7 @@ Bonjour.useCommand(
             {
               title: "Spam Report",
               description: `${interaction.user} reported ${user} for DM spam.`,
-              color: "RED",
+              color: Util.resolveColor("RED"),
             },
           ],
         });

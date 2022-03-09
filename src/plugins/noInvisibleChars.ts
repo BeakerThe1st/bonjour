@@ -48,19 +48,15 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
   if (!invisibleChars.some((char) => content.includes(char))) {
     return;
   }
-  try {
-    await message.delete();
-    const reply = await message.channel.send(
-      `${message.author}, no invisible characters please.`
-    );
-    setTimeout(async () => {
-      try {
-        await reply.delete();
-      } catch {
-        //ignored
-      }
-    }, 5000);
-  } catch {
-    //ignored
-  }
+  await message.delete();
+  const reply = await message.channel.send(
+    `${message.author}, no invisible characters please.`
+  );
+  setTimeout(async () => {
+    try {
+      await reply.delete();
+    } catch {
+      //ignored
+    }
+  }, 5000);
 });

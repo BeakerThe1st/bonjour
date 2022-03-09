@@ -1,5 +1,5 @@
 import * as Bonjour from "../core";
-import { CommandInteraction, TextChannel } from "discord.js";
+import { CommandInteraction, TextChannel, Util } from "discord.js";
 
 const images = [
   "https://i.imgur.com/A6AoUYI.gif",
@@ -64,7 +64,7 @@ Bonjour.useCommand(
               title: "Off Topic Conversation Reported",
               url: reminderMessage.url,
               description: `${user} used the off-topic command in ${interaction.channel}`,
-              color: "PURPLE",
+              color: Util.resolveColor("PURPLE"),
             },
           ],
         });
