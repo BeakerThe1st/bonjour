@@ -8,7 +8,7 @@ import morgan from "morgan";
 
 const app = express();
 
-const banned = new Keyv('postgresql://user:pass@localhost:5432/dbname'); // Set this to a valid PGSQL instance or set to just Keyv() for an in-memory solution.
+export const banned = new Keyv('postgresql://user:pass@localhost:5432/dbname'); // Set this to a valid PGSQL instance or set to just Keyv() for an in-memory solution.
 banned.on('error', err => console.error('Keyv connection error:', err));
 
 app.use(cors());

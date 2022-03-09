@@ -1,5 +1,6 @@
 import { Interaction, Message } from "discord.js";
 import * as Bonjour from "../core";
+import { banned } from "./api"
 
 Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
   if (!interaction.isButton()) {
@@ -35,5 +36,6 @@ Bonjour.useEvent("interactionCreate", async (interaction: Interaction) => {
     await unbanChannel.send(
       `<@${userId}>, your appeal was successful and you have been unbanned. You may rejoin the server at https://discord.gg/apple`
     );
+    await banned.delete(userId);
   }
 });
