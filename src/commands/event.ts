@@ -8,6 +8,7 @@ Bonjour.useCommandRegistry().register({
 });
 
 Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
+  return `There is no planned Apple Event at this time! Stay tuned to <#332310178277883916> for updates.`;
   const event = {
     name: "Peek Performance",
     timestamp: 1646762400000,
