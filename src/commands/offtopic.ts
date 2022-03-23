@@ -26,7 +26,7 @@ Bonjour.useCommand(
     const imageUrl = images[Math.floor(Math.random() * images.length)];
 
     const offTopicChannel = await interaction.client.channels.fetch(
-      "911959817315295252"
+      "949570489926422560"
     );
     if (!(offTopicChannel instanceof TextChannel)) {
       throw new Error("The off topic channel is not a valid text channel.");
