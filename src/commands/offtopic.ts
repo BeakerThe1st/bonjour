@@ -8,7 +8,6 @@ const images = [
   "https://i.imgur.com/82FuJgL.gif",
   "https://i.imgur.com/St4dtQp.gif",
   "https://i.imgur.com/PNrFFOV.gif",
-  "https://i.imgur.com/IdAT4NX.gif",
 ];
 
 const registry = Bonjour.useCommandRegistry();
