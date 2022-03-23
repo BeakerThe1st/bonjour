@@ -116,12 +116,11 @@ dist
 .vscode-test
 
 # yarn v2
-.yarn/*
-!.yarn/cache
-!.yarn/releases
-!.yarn/plugins
-!.yarn/sdks
-!.yarn/versions
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
 ### Node Patch ###
 # Serverless Webpack directories
