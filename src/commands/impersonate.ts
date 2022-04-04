@@ -26,22 +26,20 @@ Bonjour.useCommandRegistry().register({
 Bonjour.useCommand(
   "impersonate",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
-    let user;
+    const user = interaction.options.getUser('user', true);
+    let member;
     try {
-      user = interaction.options.getMember("user", true);
+      member = await interaction.guild?.members.fetch(user);
     } catch {
-      user = interaction.options.getUser("user", true);
-    }
-    if (!("username" in user)) {
-      throw new Error("User cannot be found!")
+      member = undefined;
     }
     const message = interaction.options.getString("message", true);
     const { channel } = interaction;
     if (!channel || !(channel instanceof TextChannel)) {
       throw new Error("Must be run in a text channel");
     }
-    const webhook = await channel.createWebhook(user.username, {
-      avatar: user.displayAvatarURL(),
+    const webhook = await channel.createWebhook(member?.nickname ?? user.username, {
+      avatar: member?.displayAvatarURL() ?? user.displayAvatarURL(),
     });
     setTimeout(async () => {
       try {
