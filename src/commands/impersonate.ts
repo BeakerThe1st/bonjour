@@ -1,3 +1,4 @@
+import { GuildMember } from "discord.js";
 import { CommandInteraction, TextChannel } from "discord.js";
 import * as Bonjour from "../core";
 
@@ -25,7 +26,15 @@ Bonjour.useCommandRegistry().register({
 Bonjour.useCommand(
   "impersonate",
   async (interaction: CommandInteraction): Bonjour.CommandResponsePromise => {
-    const user = interaction.options.getUser("user", true);
+    let user;
+    try {
+      user = interaction.options.getMember("user", true);
+    } catch {
+      user = interaction.options.getUser("user", true);
+    }
+    if (!("username" in user)) {
+      throw new Error("User cannot be found!")
+    }
     const message = interaction.options.getString("message", true);
     const { channel } = interaction;
     if (!channel || !(channel instanceof TextChannel)) {

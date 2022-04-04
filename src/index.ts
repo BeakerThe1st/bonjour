@@ -34,8 +34,8 @@ const client = new BonjourClient(DISCORD_TOKEN, {
     status: "online",
     activities: [
       {
-        name: "r/Apple.",
-        type: "COMPETING",
+        name: "on M1 Ultra",
+        type: "PLAYING"
       },
     ],
   },
