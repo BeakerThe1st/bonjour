@@ -1,6 +1,5 @@
 import "./env";
-import { BonjourClient, DebugType, useCurrentClient } from "./core";
-import { usePermissions } from "./core/hooks/usePermissions";
+import { BonjourClient, DebugType } from "./core";
 
 const { DISCORD_TOKEN } = process.env;
 if (!DISCORD_TOKEN) {
@@ -35,19 +34,8 @@ const client = new BonjourClient(DISCORD_TOKEN, {
     activities: [
       {
         name: "on M1 Ultra",
-        type: "PLAYING"
+        type: "PLAYING",
       },
     ],
   },
-});
-
-client.once("commandsRegistered", async () => {
-  try {
-    const rApple = await useCurrentClient().client.guilds.fetch(
-      "332309672486895637"
-    );
-    usePermissions(rApple).update(userGroups);
-  } catch {
-    throw new Error(`Unable to update permissions in r/Apple.`);
-  }
 });
