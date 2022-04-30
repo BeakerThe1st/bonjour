@@ -4,17 +4,13 @@ import { useEvent } from "../core";
 
 const foldNickname = async (member: GuildMember) => {
   const { displayName } = member;
-  const newName = ASCIIFolder.foldReplacing(displayName);
+  const newName =
+    ASCIIFolder.foldReplacing(displayName) ||
+    `Illegal Nickname ${Math.floor(1000 + Math.random() * 9000)}`;
   if (newName === displayName) {
     return;
   }
-  try {
-    await member.setNickname(newName.substring(0, 32), "Illegal Nickname");
-  } catch {
-    await member.setNickname(
-      `Illegal Nickname ${Math.floor(1000 + Math.random() * 9000)}`
-    );
-  }
+  await member.setNickname(newName.substring(0, 32), "Illegal Nickname");
   await member.send({
     embeds: [
       {
