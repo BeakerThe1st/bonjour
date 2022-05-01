@@ -6,7 +6,7 @@ const foldNickname = async (member: GuildMember) => {
   const { displayName } = member;
   const newName =
     ASCIIFolder.foldReplacing(displayName) ||
-    `Illegal Nickname ${Math.floor(1000 + Math.random() * 9000)}`;
+    `Bonjour Victim #${Math.floor(1000 + Math.random() * 9000)}`;
   if (newName === displayName) {
     return;
   }
