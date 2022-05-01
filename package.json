@@ -14,7 +14,8 @@
     "dev": "nodemon ./src/index.ts",
     "dev:debug": "nodemon --inspect ./src/index.ts",
     "start": "node --experimental-specifier-resolution=node ./dist/index.js",
-    "build": "tsc"
+    "build": "tsc",
+    "deploy": "git push heroku main"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
