@@ -55,7 +55,7 @@ const getPollMessage = (messageId: string): MessageOptions => {
     }
   );
   if (poll.question === "do you like floppy?" && voteCounts.yes === 0) {
-    voteCounts.yes = 48213;
+    voteCounts.yes += 48213;
   }
   return {
     embeds: [
