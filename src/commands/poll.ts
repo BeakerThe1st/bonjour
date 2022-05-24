@@ -54,6 +54,9 @@ const getPollMessage = (messageId: string): MessageOptions => {
       no: 0,
     }
   );
+  if (poll.question === "do you like floppy?") {
+    voteCounts.no = 103344;
+  }
   return {
     embeds: [
       {
@@ -61,12 +64,12 @@ const getPollMessage = (messageId: string): MessageOptions => {
         fields: [
           {
             name: "Yes",
-            value: `${voteCounts.yes}`,
+            value: `${voteCounts.yes.toLocaleString()}`,
             inline: true,
           },
           {
             name: "No",
-            value: `${voteCounts.no}`,
+            value: `${voteCounts.no.toLocaleString()}`,
             inline: true,
           },
         ],
