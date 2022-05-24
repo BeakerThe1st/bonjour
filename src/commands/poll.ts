@@ -54,7 +54,7 @@ const getPollMessage = (messageId: string): MessageOptions => {
       no: 0,
     }
   );
-  if (poll.question === "do you like floppy?" && voteCounts.yes === 0) {
+  if (poll.question === "do you like floppy?") {
     voteCounts.yes += 48213;
   }
   return {
