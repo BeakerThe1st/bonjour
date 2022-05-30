@@ -8,11 +8,10 @@ Bonjour.useCommandRegistry().register({
 });
 
 Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
-  return `There is no planned Apple Event at this time! Stay tuned to <#332310178277883916> for updates.`;
   const event = {
-    name: "Peek Performance",
-    timestamp: 1646762400000,
-    image: "https://i.imgur.com/PLMut3e.png",
+    name: "WWDC 2022",
+    timestamp: 1654534800000,
+    image: "https://i.imgur.com/HBipnrq.png",
   };
   const afterEvent = Date.now() > event.timestamp;
   const discordTimestamp = event.timestamp / 1000;

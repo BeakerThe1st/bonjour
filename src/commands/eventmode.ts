@@ -20,9 +20,9 @@ interface Event {
 }
 
 const currentEvent: Event = {
-  name: "Peek Performance",
-  timestamp: 1646762400000,
-  image: "https://i.imgur.com/2PoGhNQ.png",
+  name: "WWDC 2022",
+  timestamp: 1654534800000,
+  image: "https://i.imgur.com/HBipnrq.png",
   interval: 1000 * 5,
 };
 
