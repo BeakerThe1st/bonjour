@@ -110,19 +110,7 @@ const createEventModePrompt = (event: Event): MessageOptions => {
       {
         type: "BUTTON",
         label: "Apple Website",
-        url: "https://www.apple.com/apple-events/",
-        style: "LINK",
-      },
-      {
-        type: "BUTTON",
-        label: "YouTube",
-        url: "https://youtu.be/CUwg_JoNHpo",
-        style: "LINK",
-      },
-      {
-        type: "BUTTON",
-        label: "Apply for Early Access",
-        url: "https://rapple.xyz/plus-application",
+        url: "https://developer.apple.com/wwdc22/",
         style: "LINK",
       },
     ],
