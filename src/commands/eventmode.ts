@@ -113,6 +113,18 @@ const createEventModePrompt = (event: Event): MessageOptions => {
         url: "https://developer.apple.com/wwdc22/",
         style: "LINK",
       },
+      {
+        type: "BUTTON",
+        label: "YouTube",
+        url: "https://youtu.be/q5D55G7Ejs8",
+        style: "LINK",
+      },
+      {
+        type: "BUTTON",
+        label: "Leaked Event Footage",
+        url: "https://youtu.be/ZoG5jJ3E8rg",
+        style: "LINK",
+      },
     ],
   });
   return { embeds: [embed], components: [actionRow] };
