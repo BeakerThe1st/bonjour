@@ -26,7 +26,7 @@ Bonjour.useCommand(
       throw new Error("That command must only be run in a guild.");
     }
     const eventBlocklistRole = await interaction.guild.roles.fetch(
-      "950717415816319026"
+      "983327276475236402"
     );
     if (!eventBlocklistRole) {
       throw new Error("Cannot find event blocklist role");
