@@ -7,18 +7,26 @@ Bonjour.useEvent("messageCreate", async (message: Message) => {
     return;
   }
 
-  if (message.author.id === Bonjour.useCurrentClient().client.user?.id) {
+  if (message.author.bot) {
     return;
   }
 
-  const numberOfImages = message.attachments.filter((attachment) => {
-    return !!attachment.contentType?.startsWith("image");
-  }).size;
+  const { attachments } = message;
+  const [images, videos] = ["image", "video"].map((type) => {
+    return attachments.filter((attachment) => {
+      return !!attachment.contentType?.startsWith(type);
+    });
+  });
 
-  if (numberOfImages < 1 || numberOfImages !== message.attachments.size) {
+  const allowedAttachmentCount = images.size + videos.size;
+
+  if (
+    allowedAttachmentCount < 1 ||
+    allowedAttachmentCount !== message.attachments.size
+  ) {
     await message.delete();
     const reply = await message.channel.send(
-      `${message.author}, please only post images in this channel.`
+      `${message.author}, please only post images and videos in this channel.`
     );
     setTimeout(async () => {
       try {
