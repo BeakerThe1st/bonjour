@@ -9,8 +9,8 @@ Bonjour.useCommandRegistry().register({
 
 Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
   const event = {
-    name: "Far out",
-    timestamp: 1662613200000,
+    name: "Far Out",
+    timestamp: 1662570000000,
     image: "https://i.imgur.com/KvnBbmU.png",
   };
   const afterEvent = Date.now() > event.timestamp;

@@ -21,7 +21,7 @@ interface Event {
 
 const currentEvent: Event = {
   name: "Far out.",
-  timestamp: 1662613200000,
+  timestamp: 1662570000000,
   image: "https://i.imgur.com/KvnBbmU.png",
   interval: 1000 * 5,
 };
