@@ -20,9 +20,9 @@ interface Event {
 }
 
 const currentEvent: Event = {
-  name: "WWDC 2022",
-  timestamp: 1654534800000,
-  image: "https://i.imgur.com/ARKtl8b.png",
+  name: "Far out.",
+  timestamp: 1662613200000,
+  image: "https://i.imgur.com/KvnBbmU.png",
   interval: 1000 * 5,
 };
 

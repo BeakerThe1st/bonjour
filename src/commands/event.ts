@@ -9,9 +9,9 @@ Bonjour.useCommandRegistry().register({
 
 Bonjour.useCommand("event", (): Bonjour.CommandResponse => {
   const event = {
-    name: "WWDC 2022",
-    timestamp: 1654534800000,
-    image: "https://i.imgur.com/HBipnrq.png",
+    name: "Far out",
+    timestamp: 1662613200000,
+    image: "https://i.imgur.com/KvnBbmU.png",
   };
   const afterEvent = Date.now() > event.timestamp;
   const discordTimestamp = event.timestamp / 1000;
